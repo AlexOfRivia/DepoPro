@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>747</width>
+    <width>772</width>
     <height>499</height>
    </rect>
   </property>
@@ -279,39 +279,6 @@ QPushButton:Pressed
      </widget>
     </widget>
    </widget>
-   <widget class="QScrollArea" name="itemScrollArea">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>40</y>
-      <width>611</width>
-      <height>461</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QScrollArea{
-	border:none;
-}</string>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents_2">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>611</width>
-       <height>461</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QWidget{
-	background-color: rgba(37,37,37,128);
-}</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -342,6 +309,12 @@ QPushButton:Pressed
        <width>41</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>41</width>
+       <height>16777215</height>
+      </size>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton#addButton{
@@ -412,54 +385,6 @@ QPushButton#removeButton:Pressed
   <include location="DepoPro.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>stockButton</sender>
-   <signal>clicked()</signal>
-   <receiver>itemScrollArea</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>70</x>
-     <y>195</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>298</x>
-     <y>174</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dashboardButton</sender>
-   <signal>clicked()</signal>
-   <receiver>itemScrollArea</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>69</x>
-     <y>127</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>223</x>
-     <y>120</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>orderButton</sender>
-   <signal>clicked()</signal>
-   <receiver>itemScrollArea</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>78</x>
-     <y>239</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>275</x>
-     <y>230</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>dashboardButton</sender>
    <signal>clicked()</signal>

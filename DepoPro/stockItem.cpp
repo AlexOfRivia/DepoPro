@@ -4,7 +4,7 @@
 //Constructor
 stockItem::stockItem()
 {
-
+	
 }
 
 
