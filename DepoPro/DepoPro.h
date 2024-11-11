@@ -12,8 +12,8 @@ public:
     ~DepoPro();
 
 private slots:
-    void on_dashboardButton_pressed();
-    void on_stockButton_pressed();
+    void on_addButton_pressed();
+    void on_removeButton_pressed();
 
 private:
     Ui::DepoProClass ui;
