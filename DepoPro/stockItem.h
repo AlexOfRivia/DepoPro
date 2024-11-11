@@ -5,6 +5,9 @@ class stockItem
 {
 
 public:
+
+
+
 	//Constructor & Destructor
 	stockItem();
 	~stockItem();
