@@ -1,32 +1,29 @@
 #include "DepoPro.h"
 #include <QLineEdit>
 #include <QTextEdit>
+#include <QListWidgetItem>
 
 void DepoPro::addNewItem()
 {
-    //Adds a vertical layout to the frame
-    QVBoxLayout* itemLayout = qobject_cast<QVBoxLayout*>(ui.itemFrame->layout());
-
-    //Initializing the added withet (BUtton is for testing)
-    QPushButton* button = new QPushButton("Hello", ui.itemFrame);
+    QListWidgetItem* listItem = new QListWidgetItem();
     
 
     //Widget and widget layout
-    QWidget* itemWidget = new QWidget(ui.itemFrame);
+    QWidget* itemWidget = new QWidget();
     itemWidget->setLayout(new QHBoxLayout(itemWidget));
     
     //Adding things to the item Widget
     QSpinBox* spinBox = new QSpinBox();
     
     QTextEdit* itemName = new QTextEdit();
-    itemName->setStyleSheet("border:none; font: 700 14pt 'Arial';  color: white; ");
+    itemName->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 14pt 'Arial';  color: white; ");
     itemWidget->layout()->addWidget(itemName);
     itemWidget->layout()->addWidget(spinBox);
+    listItem->setSizeHint(itemWidget->sizeHint());
 
 
-    
-    //This method of inserting will add the first widget at the top
-    itemLayout->insertWidget(0,itemWidget);
+    ui.itemList->addItem(listItem);
+    ui.itemList->setItemWidget(listItem, itemWidget);
     
     
 }
@@ -44,7 +41,7 @@ DepoPro::DepoPro(QWidget *parent)
         ui.addButton, &QPushButton::clicked,this,&DepoPro::addNewItem //Connecting the adding method to a button in the 
     );
 
-    ui.itemFrame->hide();
+    ui.itemList->hide();
     ui.frame->hide();
 }
 
