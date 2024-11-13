@@ -1,4 +1,6 @@
 #include "DepoPro.h"
+#include <QLineEdit>
+#include <QTextEdit>
 
 void DepoPro::addNewItem()
 {
@@ -7,9 +9,26 @@ void DepoPro::addNewItem()
 
     //Initializing the added withet (BUtton is for testing)
     QPushButton* button = new QPushButton("Hello", ui.itemFrame);
+    
 
+    //Widget and widget layout
+    QWidget* itemWidget = new QWidget(ui.itemFrame);
+    itemWidget->setLayout(new QHBoxLayout(itemWidget));
+    
+    //Adding things to the item Widget
+    QSpinBox* spinBox = new QSpinBox();
+    
+    QTextEdit* itemName = new QTextEdit();
+    itemName->setStyleSheet("border:none; font: 700 14pt 'Arial';  color: white; ");
+    itemWidget->layout()->addWidget(itemName);
+    itemWidget->layout()->addWidget(spinBox);
+
+
+    
     //This method of inserting will add the first widget at the top
-    itemLayout->insertWidget(0,button);
+    itemLayout->insertWidget(0,itemWidget);
+    
+    
 }
 void DepoPro::removeItem()
 {

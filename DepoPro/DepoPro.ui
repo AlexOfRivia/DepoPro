@@ -397,9 +397,9 @@ QPushButton#removeButton:Pressed
 	background-color: rgba(61,61,61,128);
 }</string>
     </property>
-    <layout class="QVBoxLayout" name="widgetLayout">
+    <layout class="QVBoxLayout" name="widgetLayout" stretch="0">
      <property name="spacing">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="sizeConstraint">
       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>

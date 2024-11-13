@@ -14,7 +14,6 @@ public:
 
 private:
     Ui::DepoProClass ui;
-    stockItem item;
     void addNewItem();
     void removeItem();
 };
