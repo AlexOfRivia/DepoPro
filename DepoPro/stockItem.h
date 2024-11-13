@@ -6,7 +6,9 @@ class stockItem
 
 public:
 
-
+	//Public parameters
+	std::string itemName;
+	QWidget* itemWidget;
 
 	//Constructor & Destructor
 	stockItem();
@@ -14,6 +16,6 @@ public:
 
 
 private:
-
+	
 };
 

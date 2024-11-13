@@ -11,10 +11,10 @@ public:
     DepoPro(QWidget *parent = nullptr);
     ~DepoPro();
 
-private slots:
-    void on_addButton_pressed();
-    void on_removeButton_pressed();
 
 private:
     Ui::DepoProClass ui;
+    stockItem item;
+    void addNewItem();
+    void removeItem();
 };
