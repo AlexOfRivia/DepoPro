@@ -8,7 +8,7 @@ public:
 
 	//Public parameters
 	std::string itemName;
-	QWidget* itemWidget;
+	QWidget* itemWidget; //The widget with every componrnt
 
 	//Constructor & Destructor
 	stockItem();
