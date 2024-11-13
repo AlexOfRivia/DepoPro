@@ -16,7 +16,7 @@ void DepoPro::addNewItem()
     QSpinBox* spinBox = new QSpinBox();
     
     QTextEdit* itemName = new QTextEdit();
-    itemName->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 14pt 'Arial';  color: white; ");
+    itemName->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 14pt 'Arial';  color: white; max-height: 65px;");
     itemWidget->layout()->addWidget(itemName);
     itemWidget->layout()->addWidget(spinBox);
     listItem->setSizeHint(itemWidget->sizeHint());
