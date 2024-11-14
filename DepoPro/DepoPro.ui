@@ -394,6 +394,9 @@ QPushButton#removeButton:Pressed
 	background-color: rgba(61,61,61,128);
 }</string>
     </property>
+    <property name="spacing">
+     <number>1</number>
+    </property>
    </widget>
   </widget>
  </widget>
