@@ -377,6 +377,41 @@ QPushButton#removeButton:Pressed
       <string>-</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="loadButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#loadButton{
+	font: 700 10pt &quot;Britannic&quot;;
+	color: rgba(200,200,200,225);
+	background-color: rgba(4,30,176,255);		
+	border-radius: 5px;
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(4,30,80,255);	
+}
+QPushButton#loadButton:Hover
+{
+	background-color: rgba(4,30,146,255);	
+	border: inset;
+}
+QPushButton#loadButton:Pressed
+{
+	background-color: rgba(4,30,120,255);	
+	border: inset;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Load list</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QListWidget" name="itemList">
     <property name="geometry">

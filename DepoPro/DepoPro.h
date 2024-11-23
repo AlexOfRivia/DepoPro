@@ -16,4 +16,5 @@ private:
     Ui::DepoProClass ui;
     void addNewItem();
     void removeItem();
+    void loadFromFile();
 };

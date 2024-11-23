@@ -4,6 +4,8 @@
 #include <QCheckBox>
 #include <QListWidgetItem>
 
+
+//Adding a new item to list
 void DepoPro::addNewItem()
 {
     QListWidgetItem* listItem = new QListWidgetItem();
@@ -18,6 +20,8 @@ void DepoPro::addNewItem()
     
     
 }
+
+//Removing an item from list
 void DepoPro::removeItem()
 {
     //Creating a new ListWidgetItem, which is the selected (clicked) item in the list
@@ -28,6 +32,13 @@ void DepoPro::removeItem()
     
 }
 
+//Loading a list from file
+void DepoPro::loadFromFile()
+{
+
+}
+
+//Constructor
 DepoPro::DepoPro(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -39,10 +50,14 @@ DepoPro::DepoPro(QWidget *parent)
     QObject::connect(
         ui.removeButton, &QPushButton::clicked,this,&DepoPro::removeItem //Connecting the removing method to a button in the ui
     );
+    QObject::connect(
+        ui.loadButton, &QPushButton::clicked,this,&DepoPro::loadFromFile
+    );
 
     ui.itemList->hide();
     ui.frame->hide();
 }
 
+//Destructor
 DepoPro::~DepoPro()
 {}

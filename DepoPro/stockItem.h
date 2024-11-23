@@ -14,6 +14,7 @@ class stockItem
 public:
 	//Public parameters
 	QWidget* stockItemWidget;
+	QTextEdit* itemName;
 
 	//Constructor & Destructor
 	stockItem();
