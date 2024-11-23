@@ -20,7 +20,12 @@ void DepoPro::addNewItem()
 }
 void DepoPro::removeItem()
 {
-
+    //Creating a new ListWidgetItem, which is the selected (clicked) item in the list
+    QListWidgetItem* selectedItem = ui.itemList->takeItem(ui.itemList->currentRow()); //Take item takes care of deleting the selected item 
+    
+    //Deleting the selected item object
+    delete selectedItem; 
+    
 }
 
 DepoPro::DepoPro(QWidget *parent)
@@ -29,7 +34,10 @@ DepoPro::DepoPro(QWidget *parent)
     ui.setupUi(this);
 
     QObject::connect(
-        ui.addButton, &QPushButton::clicked,this,&DepoPro::addNewItem //Connecting the adding method to a button in the 
+        ui.addButton, &QPushButton::clicked,this,&DepoPro::addNewItem //Connecting the adding method to a button in the ui
+    );
+    QObject::connect(
+        ui.removeButton, &QPushButton::clicked,this,&DepoPro::removeItem //Connecting the removing method to a button in the ui
     );
 
     ui.itemList->hide();
