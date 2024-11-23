@@ -2,6 +2,7 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QCheckBox>
+#include <QFileDialog>
 #include <QListWidgetItem>
 
 
@@ -35,7 +36,9 @@ void DepoPro::removeItem()
 //Loading a list from file
 void DepoPro::loadFromFile()
 {
+    QString fileName = QFileDialog::getOpenFileName(this, "Please, chose a file to open");
 
+    QFile file(fileName);
 }
 
 //Constructor
