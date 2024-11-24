@@ -15,19 +15,22 @@ void DepoPro::addNewItem()
         this->arrElementAmount = 0;
     }
     //Create an Array of stock items and add them to list Item, this might be the answer to getting the item name
-    QListWidgetItem* listItem = new QListWidgetItem();
-    
-    stockItem* newStockItem = new stockItem;
+    if (ui.itemList->count()<100)
+    {
+        QListWidgetItem* listItem = new QListWidgetItem();
+
+        stockItem* newStockItem = new stockItem;
 
 
-    listItem->setSizeHint(newStockItem->stockItemWidget->sizeHint());
+        listItem->setSizeHint(newStockItem->stockItemWidget->sizeHint());
 
-    //Setting the itemWidget as a listItem, so that can be put into a list
-    ui.itemList->addItem(listItem);
-    ui.itemList->setItemWidget(listItem, newStockItem->stockItemWidget);
-    
-    this->stockArray[arrElementAmount] = *newStockItem;
-    this->arrElementAmount++;
+        //Setting the itemWidget as a listItem, so that can be put into a list
+        ui.itemList->addItem(listItem);
+        ui.itemList->setItemWidget(listItem, newStockItem->stockItemWidget);
+
+        this->stockArray[arrElementAmount] = *newStockItem;
+        this->arrElementAmount++;
+    }
 }
 
 //Removing an item from list
@@ -127,5 +130,5 @@ DepoPro::DepoPro(QWidget *parent)
 //Destructor
 DepoPro::~DepoPro()
 {
-   // delete[] stockArray;
+   
 }
