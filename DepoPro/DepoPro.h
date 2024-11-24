@@ -16,7 +16,7 @@ private:
     Ui::DepoProClass ui;
 
     int arrElementAmount=0;
-    stockItem* stockArray = new stockItem[arrElementAmount];
+    stockItem stockArray[100];
     void addNewItem();
     void removeItem();
     void loadFromFile();
