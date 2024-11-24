@@ -8,13 +8,17 @@ class DepoPro : public QMainWindow
     Q_OBJECT
 
 public:
-    DepoPro(QWidget *parent = nullptr);
+    DepoPro(QWidget* parent = nullptr);
     ~DepoPro();
 
 
 private:
     Ui::DepoProClass ui;
+
+    int arrElementAmount=0;
+    stockItem* stockArray = new stockItem[arrElementAmount];
     void addNewItem();
     void removeItem();
     void loadFromFile();
+    void saveToFile();
 };

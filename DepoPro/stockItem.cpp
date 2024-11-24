@@ -12,6 +12,7 @@ stockItem::stockItem()
     //SpinBox
     QSpinBox* spinBox = new QSpinBox();
     spinBox->setStyleSheet("max-width:50px; color: white;");
+    spinBox->setMaximum(999);
 
     //Item text
     itemName = new QTextEdit();
