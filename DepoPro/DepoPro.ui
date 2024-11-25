@@ -467,6 +467,9 @@ QPushButton#saveButton:Pressed
     <property name="spacing">
      <number>1</number>
     </property>
+    <property name="currentRow">
+     <number>-1</number>
+    </property>
    </widget>
    <widget class="QFrame" name="NotepadFrame">
     <property name="geometry">
