@@ -20,6 +20,7 @@ void DepoPro::addNewItem()
         QListWidgetItem* listItem = new QListWidgetItem();
 
         stockItem* newStockItem = new stockItem;
+        this->stockArray[arrElementAmount] = *newStockItem;
 
 
         listItem->setSizeHint(newStockItem->stockItemWidget->sizeHint());
@@ -28,7 +29,6 @@ void DepoPro::addNewItem()
         ui.itemList->addItem(listItem);
         ui.itemList->setItemWidget(listItem, newStockItem->stockItemWidget);
 
-        this->stockArray[arrElementAmount] = *newStockItem;
         this->arrElementAmount++;
     }
 }
@@ -64,14 +64,14 @@ void DepoPro::loadFromFile()
             stockItem* loadedItem = new stockItem; //Creates a new stock item
 
             loadedItem->itemName->setText(line); //Sets the stock item name as the read line
+            stockArray[arrElementAmount] = *loadedItem;
+            this->arrElementAmount++;
             
             loadedListItem->setSizeHint(loadedItem->stockItemWidget->sizeHint());
 
             ui.itemList->addItem(loadedListItem); //Adds the item to the list
             ui.itemList->setItemWidget(loadedListItem, loadedItem->stockItemWidget);
             
-            stockArray[arrElementAmount] = *loadedItem;
-            this->arrElementAmount++;
         }
 
         file.close(); //Closes the file
@@ -130,5 +130,5 @@ DepoPro::DepoPro(QWidget *parent)
 //Destructor
 DepoPro::~DepoPro()
 {
-   
+    
 }
