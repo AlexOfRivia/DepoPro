@@ -60,11 +60,18 @@ void DepoPro::loadFromFile()
 
         while (!in.atEnd()) {
             QString line = in.readLine(); //Creates a line of text from the txt file
+            QStringList lineList = line.split(";"); //Splits the currently read line after ;
+            QString stockItemName = lineList.value(0); //Setting the item name to the first value in string list
+            QString stockItemAmountStr = lineList.value(1); //Setting the item name to the second value in string list
+            int stockItemAmount = stockItemAmountStr.toInt(); //Converting the read amount to int
+
             QListWidgetItem* loadedListItem = new QListWidgetItem(); //Creates a new widget item
             stockItem* loadedItem = new stockItem; //Creates a new stock item
 
-            loadedItem->itemName->setText(line); //Sets the stock item name as the read line
-            stockArray[arrElementAmount] = *loadedItem;
+            loadedItem->itemName->setText(stockItemName); //Sets the stock item name as the split name
+            loadedItem->spinBox->setValue(stockItemAmount); //Sets the stock item amount as the converted int value
+
+            stockArray[arrElementAmount] = *loadedItem; //Adding new array element
             this->arrElementAmount++;
             
             loadedListItem->setSizeHint(loadedItem->stockItemWidget->sizeHint());
