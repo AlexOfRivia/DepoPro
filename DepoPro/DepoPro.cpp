@@ -93,7 +93,7 @@ void DepoPro::saveToFile()
                 QTextStream stream(&file);
                 for (int i=0;i<arrElementAmount;i++)
                 {
-                    stream << this->stockArray[i].itemName->toPlainText() << "\n";
+                    stream << this->stockArray[i].itemName->toPlainText() << ";" << this->stockArray[i].spinBox->value() << "\n";
                 }
 
                 file.close();

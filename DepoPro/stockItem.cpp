@@ -10,7 +10,7 @@ stockItem::stockItem()
 	stockItemWidget->setStyleSheet("border:none; background-color:rgba(45,45,45,200);");
 
     //SpinBox
-    QSpinBox* spinBox = new QSpinBox();
+    spinBox = new QSpinBox();
     spinBox->setStyleSheet("max-width:50px; color: white;");
     spinBox->setMaximum(999);
 
