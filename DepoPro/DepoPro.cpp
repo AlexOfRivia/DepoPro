@@ -39,7 +39,7 @@ void DepoPro::removeItem()
     //Creating a new ListWidgetItem, which is the selected (clicked) item in the list
     QListWidgetItem* selectedItem = ui.itemList->takeItem(ui.itemList->currentRow()); //Take item takes care of deleting the selected item 
     
-    for (int i = ui.itemList->currentRow()+1;i<arrElementAmount;i++)
+    for (int i = ui.itemList->currentRow();i<arrElementAmount;i++)
     {
         this->stockArray[i] = this->stockArray[i+1];
     }
@@ -88,7 +88,7 @@ void DepoPro::loadFromFile()
 //Saving current stock to file
 void DepoPro::saveToFile()
 {
-    if (ui.itemList->count()!=0)
+    if (ui.itemList->count()!=0 && arrElementAmount!=0)
     {
         QString fileName = QFileDialog::getSaveFileName(this, "Please, chose a file to open");
         if (fileName != "")
@@ -98,7 +98,7 @@ void DepoPro::saveToFile()
             if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 // bind it
                 QTextStream stream(&file);
-                for (int i=0;i<arrElementAmount;i++)
+                for (int i=0;i<ui.itemList->count();i++)
                 {
                     stream << this->stockArray[i].itemName->toPlainText() << ";" << this->stockArray[i].spinBox->value() << "\n";
                 }
