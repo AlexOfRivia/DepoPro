@@ -26,15 +26,18 @@ void DepoPro::addNewItem()
 //Removing an item from list
 void DepoPro::removeItem()
 {
-    // Get the index of the selected item
-    int index = ui.itemList->currentRow(); //Getting the list item index
+    if (ui.itemList->count()!=0)
+    {
+        // Get the index of the selected item
+        int index = ui.itemList->currentRow(); //Getting the list item index
 
-    // Remove the item from the list and the stock vector
-    QListWidgetItem* selectedItem = ui.itemList->takeItem(index); //Removing the selected item from the list
-    this->stock.erase(this->stock.begin() + index); //Erasing the vector item
+        // Remove the item from the list and the stock vector
+        QListWidgetItem* selectedItem = ui.itemList->takeItem(index); //Removing the selected item from the list
+        this->stock.erase(this->stock.begin() + index); //Erasing the vector item
 
-    // Delete the selected item object
-    delete selectedItem;
+        // Delete the selected item object
+        delete selectedItem;
+    }
 }
 
 //Loading a stock list to current list from file
@@ -61,7 +64,6 @@ void DepoPro::loadFromFile()
 
             this->stock.push_back(*loadedItem); //Adding a new element to a vector
 
-            
             loadedListItem->setSizeHint(loadedItem->stockItemWidget->sizeHint());
 
             ui.itemList->addItem(loadedListItem); //Adds the item to the list
@@ -76,7 +78,7 @@ void DepoPro::loadFromFile()
 //Saving current stock to file
 void DepoPro::saveToFile()
 {
-    if (ui.itemList->count()!=0)
+    if (ui.itemList->count()!=0 && this->stock.size()!=0)
     {
         QString fileName = QFileDialog::getSaveFileName(this, "Please, chose a file to open"); //Opening a file dialog box
         if (fileName != "") //If file name is not empty

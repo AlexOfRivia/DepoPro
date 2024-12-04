@@ -14,7 +14,6 @@ public:
 
 private:
     Ui::DepoProClass ui;
-
     std::vector<stockItem> stock;
     void addNewItem();
     void removeItem();
