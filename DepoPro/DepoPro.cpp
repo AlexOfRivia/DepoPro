@@ -10,49 +10,37 @@
 //Adding a new item to list
 void DepoPro::addNewItem()
 {
-    if (ui.itemList->count() == 0)
-    {
-        this->arrElementAmount = 0;
-    }
+        QListWidgetItem* listItem = new QListWidgetItem(); //Creating a new list item
 
-    if (ui.itemList->count()<100)
-    {
-        QListWidgetItem* listItem = new QListWidgetItem();
+        stockItem* newStockItem = new stockItem; //Creating a new stockItem object
 
-        stockItem* newStockItem = new stockItem;
-        this->stockArray[arrElementAmount] = *newStockItem;
-
+        this->stock.push_back(*newStockItem); //Adding new element to the vector
 
         listItem->setSizeHint(newStockItem->stockItemWidget->sizeHint());
 
         //Setting the itemWidget as a listItem, so that can be put into a list
         ui.itemList->addItem(listItem);
         ui.itemList->setItemWidget(listItem, newStockItem->stockItemWidget);
-
-        this->arrElementAmount++;
-    }
 }
 
 //Removing an item from list
 void DepoPro::removeItem()
 {
-    //Creating a new ListWidgetItem, which is the selected (clicked) item in the list
-    QListWidgetItem* selectedItem = ui.itemList->takeItem(ui.itemList->currentRow()); //Take item takes care of deleting the selected item 
-    
-    for (int i = ui.itemList->currentRow();i<arrElementAmount;i++)
-    {
-        this->stockArray[i] = this->stockArray[i+1];
-    }
+    // Get the index of the selected item
+    int index = ui.itemList->currentRow(); //Getting the list item index
 
-    this->arrElementAmount--;
-    //Deleting the selected item object
-    delete selectedItem; 
+    // Remove the item from the list and the stock vector
+    QListWidgetItem* selectedItem = ui.itemList->takeItem(index); //Removing the selected item from the list
+    this->stock.erase(this->stock.begin() + index); //Erasing the vector item
+
+    // Delete the selected item object
+    delete selectedItem;
 }
 
 //Loading a stock list to current list from file
 void DepoPro::loadFromFile()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Please, chose a file to open");
+    QString fileName = QFileDialog::getOpenFileName(this, "Please, chose a file to open"); //Opens a file dialog box
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         // bind it
@@ -71,8 +59,8 @@ void DepoPro::loadFromFile()
             loadedItem->itemName->setText(stockItemName); //Sets the stock item name as the split name
             loadedItem->spinBox->setValue(stockItemAmount); //Sets the stock item amount as the converted int value
 
-            stockArray[arrElementAmount] = *loadedItem; //Adding new array element
-            this->arrElementAmount++;
+            this->stock.push_back(*loadedItem); //Adding a new element to a vector
+
             
             loadedListItem->setSizeHint(loadedItem->stockItemWidget->sizeHint());
 
@@ -88,22 +76,22 @@ void DepoPro::loadFromFile()
 //Saving current stock to file
 void DepoPro::saveToFile()
 {
-    if (ui.itemList->count()!=0 && arrElementAmount!=0)
+    if (ui.itemList->count()!=0)
     {
-        QString fileName = QFileDialog::getSaveFileName(this, "Please, chose a file to open");
-        if (fileName != "")
+        QString fileName = QFileDialog::getSaveFileName(this, "Please, chose a file to open"); //Opening a file dialog box
+        if (fileName != "") //If file name is not empty
         {
 
-            QFile file(fileName);
+            QFile file(fileName); //Open file
             if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 // bind it
-                QTextStream stream(&file);
-                for (int i=0;i<ui.itemList->count();i++)
+                QTextStream stream(&file); //Create a stream
+                for (int i=0;i<stock.size();i++)
                 {
-                    stream << this->stockArray[i].itemName->toPlainText() << ";" << this->stockArray[i].spinBox->value() << "\n";
+                    stream << this->stock[i].itemName->toPlainText() << ";" << this->stock[i].spinBox->value() << "\n"; //Write into stream
                 }
 
-                file.close();
+                file.close(); //Closing the file after writing 
             }
         }
 
@@ -130,6 +118,7 @@ DepoPro::DepoPro(QWidget *parent)
         ui.saveButton, &QPushButton::clicked,this,&DepoPro::saveToFile //Connecting the saving method to a button in the ui
     );
 
+    //Hiding the frame and itemList upon startup
     ui.itemList->hide();
     ui.frame->hide();
 }

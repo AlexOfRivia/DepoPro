@@ -15,8 +15,7 @@ public:
 private:
     Ui::DepoProClass ui;
 
-    int arrElementAmount=0;
-    stockItem stockArray[100];
+    std::vector<stockItem> stock;
     void addNewItem();
     void removeItem();
     void loadFromFile();
