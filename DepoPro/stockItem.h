@@ -15,6 +15,8 @@ public:
 	//Public parameters
 	QWidget* stockItemWidget;
 	QTextEdit* itemName;
+	QTextEdit* itemCategory;
+	QTextEdit* itemPrice;
 	QSpinBox* spinBox;
 
 	//Constructor & Destructor
