@@ -19,23 +19,32 @@ stockItem::stockItem()
     itemName->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 12pt 'Arial';  color: white; max-height: 65px; max-width:375px;");
     itemName->setText("Enter product name");
 
-    //Item price text
-    itemPrice = new QTextEdit();
-    itemPrice->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 65px; max-width:130px;");
-    itemPrice->setText("Enter product price");
+    //Item price
+    priceSpinBox = new QDoubleSpinBox();    
+    priceSpinBox->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 32.5px; max-width:95px;");
+    priceSpinBox->setMaximum(999999);
 
     //Item category text
     itemCategory = new QTextEdit();
-    itemCategory->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 65px; max-width:130px;");
-    itemPrice->setText("Enter product category");
+    itemCategory->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 32.5px;max-width:65px;");
+    itemCategory->setText("Enter product category");
+
+    QLabel* priceLabel = new QLabel();
+    priceLabel->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 15px;max-width:90px;");
+    priceLabel->setText("Price: (PLN)");
+
+    QVBoxLayout* itemLayout = new QVBoxLayout();
+    itemLayout->addWidget(priceLabel);
+    itemLayout->addWidget(priceSpinBox);
 
     //Frame (as a spacer)
     QFrame* spacerFrame = new QFrame();
-    spacerFrame->setStyleSheet("width:130px;background-color:rgba(45,45,45,200);");
+    spacerFrame->setStyleSheet("border:none;max-width:95px;background-color:rgba(45,45,45,200);");
+    spacerFrame->setLayout(itemLayout);
 
     //Adding everything to the item widget
     this->stockItemWidget->layout()->addWidget(itemName);
-    this->stockItemWidget->layout()->addWidget(spacerFrame); //Category and price layout will go here instead
+    this->stockItemWidget->layout()->addWidget(spacerFrame);
     this->stockItemWidget->layout()->addWidget(spinBox);
 }
 

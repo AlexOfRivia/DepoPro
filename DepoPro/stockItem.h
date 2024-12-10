@@ -8,6 +8,7 @@
 #include <QTextEdit>
 #include <QCheckBox>
 #include <QListWidgetItem>
+#include <QLabel>
 class stockItem
 {
 
@@ -16,7 +17,7 @@ public:
 	QWidget* stockItemWidget;
 	QTextEdit* itemName;
 	QTextEdit* itemCategory;
-	QTextEdit* itemPrice;
+	QDoubleSpinBox* priceSpinBox;
 	QSpinBox* spinBox;
 
 	//Constructor & Destructor
