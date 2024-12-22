@@ -53,13 +53,16 @@ void DepoPro::loadFromFile()
             QString line = in.readLine(); //Creates a line of text from the txt file
             QStringList lineList = line.split(";"); //Splits the currently read line after ;
             QString stockItemName = lineList.value(0); //Setting the item name to the first value in string list
-            QString stockItemAmountStr = lineList.value(1); //Setting the item name to the second value in string list
+			QString stockItemPriceStr = lineList.value(1); //Setting the item name to the second value in string list
+            QString stockItemAmountStr = lineList.value(2); //Setting the item name to the third value in string list
             int stockItemAmount = stockItemAmountStr.toInt(); //Converting the read amount to int
+			float stockItemPrice = stockItemPriceStr.toFloat(); //Converting the read price to int
 
             QListWidgetItem* loadedListItem = new QListWidgetItem(); //Creates a new widget item
             stockItem* loadedItem = new stockItem; //Creates a new stock item
 
             loadedItem->itemName->setText(stockItemName); //Sets the stock item name as the split name
+			loadedItem->priceSpinBox->setValue(stockItemPrice); //Sets the stock item price as the converted int value
             loadedItem->spinBox->setValue(stockItemAmount); //Sets the stock item amount as the converted int value
 
             this->stock.push_back(*loadedItem); //Adding a new element to a vector
@@ -90,7 +93,7 @@ void DepoPro::saveToFile()
                 QTextStream stream(&file); //Create a stream
                 for (int i=0;i<stock.size();i++)
                 {
-                    stream << this->stock[i].itemName->toPlainText() << ";" << this->stock[i].spinBox->value() << "\n"; //Write into stream
+                    stream << this->stock[i].itemName->toPlainText() << ";" << this->stock[i].priceSpinBox->value() <<";" << this->stock[i].spinBox->value() << "\n"; //Write into stream
                 }
 
                 file.close(); //Closing the file after writing 
