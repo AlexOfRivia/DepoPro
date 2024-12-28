@@ -81,7 +81,7 @@ void DepoPro::loadFromFile()
         int stockItemAmount = stockItemAmountStr.toInt(&amountOk); //Converting the read amount to int
         float stockItemPrice = stockItemPriceStr.toFloat(&priceOk); //Converting the read price to float
 
-        if (!amountOk || !priceOk) 
+        if (!amountOk || !priceOk)
         {
             //Handle conversion error
             QMessageBox::warning(this, "Error", "Invalid stock amount or price in the file.");
@@ -109,25 +109,36 @@ void DepoPro::loadFromFile()
 //Saving current stock to file
 void DepoPro::saveToFile()
 {
-    if (ui.itemList->count()!=0 && this->stock.size()!=0)
+	if (ui.itemList->count() != 0 && !this->stock.empty()) //Checking if the stock is not empty
     {
         QString fileName = QFileDialog::getSaveFileName(this, "Please, chose a file to open"); //Opening a file dialog box
         if (fileName != "") //If file name is not empty
         {
 
             QFile file(fileName); //Open file
-            if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                // bind it
+            if (file.open(QIODevice::WriteOnly | QIODevice::Text)) 
+            {
                 QTextStream stream(&file); //Create a stream
-                for (int i=0;i<stock.size();i++)
+                for (const auto& item : stock)
                 {
-                    stream << this->stock[i].itemName->toPlainText() << ";" << this->stock[i].priceSpinBox->value() <<";" << this->stock[i].spinBox->value() << "\n"; //Write into stream
+                    stream << item.itemName->toPlainText() << ";" //Writing the item name into stream
+						<< item.priceSpinBox->value() << ";" //Writing the item price into stream
+                        << item.spinBox->value() << "\n"; //Writing the item amount into stream
                 }
 
                 file.close(); //Closing the file after writing 
+                QMessageBox::information(this, "Success", "Stock saved successfully.");
+
+            }
+            else {
+				QMessageBox::warning(this, "Error", "Failed to save the file.");
+				return;
             }
         }
-
+    }
+    else {
+        QMessageBox::warning(this, "Error", "No items to save.");
+        return;
     }
 }
 
