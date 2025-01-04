@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="orderItem.cpp" />
     <ClCompile Include="stockItem.cpp" />
     <QtRcc Include="DepoPro.qrc" />
     <QtUic Include="DepoPro.ui" />
@@ -100,6 +101,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="orderItem.h" />
     <ClInclude Include="stockItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

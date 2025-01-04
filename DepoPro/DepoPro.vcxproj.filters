@@ -43,9 +43,15 @@
     <ClCompile Include="stockItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="orderItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stockItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="orderItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

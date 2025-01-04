@@ -532,6 +532,29 @@ QPushButton#saveButton:Pressed
      </property>
     </widget>
    </widget>
+   <widget class="QListWidget" name="orderList">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>50</y>
+      <width>621</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QListWidget
+{
+	border:none;
+	background-color: rgba(61,61,61,128);
+}</string>
+    </property>
+    <property name="spacing">
+     <number>1</number>
+    </property>
+    <property name="currentRow">
+     <number>-1</number>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -776,6 +799,54 @@ QPushButton#saveButton:Pressed
     <hint type="destinationlabel">
      <x>155</x>
      <y>242</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dashboardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>orderList</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>23</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>237</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stockButton</sender>
+   <signal>clicked()</signal>
+   <receiver>orderList</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>2</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>orderButton</sender>
+   <signal>clicked()</signal>
+   <receiver>orderList</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>9</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>200</x>
+     <y>359</y>
     </hint>
    </hints>
   </connection>
