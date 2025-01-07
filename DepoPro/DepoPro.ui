@@ -555,6 +555,105 @@ QPushButton#saveButton:Pressed
      <number>-1</number>
     </property>
    </widget>
+   <widget class="QFrame" name="orderFrame">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>0</y>
+      <width>661</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame
+{
+    border:none;
+	background-color: rgb(61,61,61);
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="addOrderButton">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>10</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>41</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#addOrderButton{
+	font: 700 10pt &quot;Britannic&quot;;
+	color: rgba(200,200,200,225);
+	background-color: rgba(4,30,176,255);		
+	border-radius: 5px;
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(4,30,80,255);	
+}
+QPushButton#addOrderButton:Hover
+{
+	background-color: rgba(4,30,146,255);	
+	border: inset;
+}
+QPushButton#addOrderButton:Pressed
+{
+	background-color: rgba(4,30,120,255);	
+	border: inset;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>+</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="removeOrderButton">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>10</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#removeOrderButton{
+	font: 700 10pt &quot;Britannic&quot;;
+	color: rgba(200,200,200,225);
+	background-color: rgba(4,30,176,255);		
+	border-radius: 5px;
+	border-style: outset;
+    border-width: 2px;
+    border-color: rgba(4,30,80,255);	
+}
+QPushButton#removeOrderButton:Hover
+{
+	background-color: rgba(4,30,146,255);	
+	border: inset;
+}
+QPushButton#removeOrderButton:Pressed
+{
+	background-color: rgba(4,30,120,255);	
+	border: inset;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -847,6 +946,54 @@ QPushButton#saveButton:Pressed
     <hint type="destinationlabel">
      <x>200</x>
      <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dashboardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>orderFrame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>12</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stockButton</sender>
+   <signal>clicked()</signal>
+   <receiver>orderFrame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>243</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>orderButton</sender>
+   <signal>clicked()</signal>
+   <receiver>orderFrame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>233</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>22</y>
     </hint>
    </hints>
   </connection>

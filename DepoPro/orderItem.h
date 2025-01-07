@@ -19,7 +19,6 @@ class orderItem
 	int date;
 	int clientInfo;
 	QString address;
-
 	QTextEdit* itemCategory;
 	QDoubleSpinBox* priceSpinBox;
 	QSpinBox* amountSpinBox;

@@ -43,6 +43,16 @@ void DepoPro::removeItem()
     }
 }
 
+void DepoPro::addNewOrder()
+{
+    //Opening the dialog box with stock vector elements
+}
+
+void DepoPro::removeOrder()
+{
+	//removing the order from the list
+}
+
 //Loading a stock list to current list from file
 void DepoPro::loadFromFile()
 {
@@ -146,7 +156,6 @@ void DepoPro::saveToFile()
 DepoPro::DepoPro(QWidget *parent)
     : QMainWindow(parent)
 {
-    //this->arrElementAmount = 0;
     ui.setupUi(this);
 
     QObject::connect(
@@ -161,10 +170,18 @@ DepoPro::DepoPro(QWidget *parent)
     QObject::connect(
         ui.saveButton, &QPushButton::clicked,this,&DepoPro::saveToFile //Connecting the saving method to a button in the ui
     );
+    QObject::connect(
+		ui.addOrderButton,& QPushButton::clicked,this,& DepoPro::addNewOrder //Connecting the adding order method to a button in the ui
+	);
+    QObject::connect(
+        ui.removeOrderButton,&QPushButton::clicked,this,&DepoPro::removeOrder //Connecting the removing order method to a button in the ui
+    );
+
 
     //Hiding the frame and itemList upon startup
     ui.itemList->hide();
     ui.frame->hide();
+    ui.orderFrame->hide();
 }
 
 //Destructor
