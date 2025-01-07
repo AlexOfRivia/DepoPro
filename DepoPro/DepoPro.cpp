@@ -52,7 +52,7 @@ void DepoPro::removeItem()
 //Adding a new order to the order list
 void DepoPro::addNewOrder()
 {
-    if (ui.itemList->count() == 0 && this->stock.empty())
+    if (ui.itemList->count() == 0 || this->stock.empty()) // Use || to check if either is empty
     {
         QMessageBox::warning(this, "Error", "You currently have no items in stock.");
         return;
@@ -73,7 +73,7 @@ void DepoPro::addNewOrder()
 
         QCheckBox* checkBox = new QCheckBox(stock[i].itemName->toPlainText(), &dialog);
         QSpinBox* spinBox = new QSpinBox(&dialog);
-        spinBox->setRange(1, stock[i].spinBox->value()); //Set the range based on available stock
+        spinBox->setRange(1, stock[i].spinBox->value()); // Set the range based on available stock
         QLabel* nameLabel = new QLabel(QString::number(stock[i].spinBox->value()), &dialog);
 
         itemLayout->addWidget(checkBox);
@@ -87,12 +87,12 @@ void DepoPro::addNewOrder()
         spinBoxes.push_back(spinBox);
     }
 
-	QLabel* clientInformation = new QLabel("Client Information: ", &dialog);
-	QLineEdit* clientInfoInput = new QLineEdit(&dialog);
-	QLabel* clientAddress = new QLabel("Client Address: ", &dialog);
-	QLineEdit* clientAddressInput = new QLineEdit(&dialog);
-	mainLayout->addWidget(clientInformation);
-	mainLayout->addWidget(clientInfoInput);
+    QLabel* clientInformation = new QLabel("Client Information: ", &dialog);
+    QTextEdit* clientInfoInput = new QTextEdit(&dialog);
+    QLabel* clientAddress = new QLabel("Client Address: ", &dialog);
+    QTextEdit* clientAddressInput = new QTextEdit(&dialog);
+    mainLayout->addWidget(clientInformation);
+    mainLayout->addWidget(clientInfoInput);
     mainLayout->addWidget(clientAddress);
     mainLayout->addWidget(clientAddressInput);
 
@@ -102,16 +102,31 @@ void DepoPro::addNewOrder()
 
     if (dialog.exec() == QDialog::Accepted)
     {
+        QListWidgetItem* orderListItem = new QListWidgetItem();
+        orderItem* newOrderItem = new orderItem; // Creating a new orderItem object
+
         for (size_t i = 0; i < checkBoxes.size(); ++i)
         {
             if (checkBoxes[i]->isChecked())
             {
-                int amount = spinBoxes[i]->value();
-                //Process the selected items and amounts
-                //For example, add them to a new order
+                QLabel* itemLabel = new QLabel(stock[i].itemName->toPlainText(), &dialog);
+                QLabel* amountLabel = new QLabel(QString::number(spinBoxes[i]->value()), &dialog);
+                newOrderItem->orderedAmounts.push_back(amountLabel);
+                newOrderItem->items.push_back(itemLabel);
             }
         }
+
+        newOrderItem->clientInfo->setText("Client:\n" + clientInfoInput->toPlainText());
+        newOrderItem->address->setText("Address:\n" + clientAddressInput->toPlainText());
+        this->orders.push_back(*newOrderItem); // Adding new element to the vector
+
+        orderListItem->setSizeHint(newOrderItem->orderItemWidget->sizeHint());
+
+        // Setting the itemWidget as a listItem, so that can be put into a list
+        ui.orderList->addItem(orderListItem);
+        ui.orderList->setItemWidget(orderListItem, newOrderItem->orderItemWidget);
     }
+
 }
 
 //Removing the order from the list

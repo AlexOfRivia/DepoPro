@@ -20,15 +20,16 @@ class orderItem
 	public:
 		//Public parameters
 		QWidget* orderItemWidget;
-		QLabel* itemNames;
+		QTextEdit* orderedItems;
+		QTextEdit* itemAmounts;
 		int orderID;
 		int orderDate;
-		QString clientInfo;
-		QString address;
+		QLabel* clientInfo;
+		QLabel* address;
 		//QTextEdit* itemCategory;
 
 		std::vector<QLabel*> items;
-		std::vector<QSpinBox*> orderedAmounts;
+		std::vector<QLabel*> orderedAmounts;
 
 		//Constructor & Destructor
 		orderItem();
