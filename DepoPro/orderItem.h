@@ -21,7 +21,6 @@ class orderItem
 		//Public parameters
 		QWidget* orderItemWidget;
 		QTextEdit* orderedItems;
-		QTextEdit* itemAmounts;
 		int orderID;
 		int orderDate;
 		QLabel* clientInfo;

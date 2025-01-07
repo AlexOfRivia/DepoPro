@@ -52,7 +52,7 @@ void DepoPro::removeItem()
 //Adding a new order to the order list
 void DepoPro::addNewOrder()
 {
-    if (ui.itemList->count() == 0 || this->stock.empty()) // Use || to check if either is empty
+    if (ui.itemList->count() == 0 || this->stock.empty()) //Checking if empty
     {
         QMessageBox::warning(this, "Error", "You currently have no items in stock.");
         return;
@@ -67,13 +67,14 @@ void DepoPro::addNewOrder()
     std::vector<QSpinBox*> spinBoxes;
     std::vector<QLabel*> labels;
 
+    //Writing the elements from the stock vector to the dialog box
     for (size_t i = 0; i < stock.size(); ++i)
     {
         QHBoxLayout* itemLayout = new QHBoxLayout;
 
         QCheckBox* checkBox = new QCheckBox(stock[i].itemName->toPlainText(), &dialog);
         QSpinBox* spinBox = new QSpinBox(&dialog);
-        spinBox->setRange(1, stock[i].spinBox->value()); // Set the range based on available stock
+        spinBox->setRange(1, stock[i].spinBox->value()); //Setting the range based on available stock
         QLabel* nameLabel = new QLabel(QString::number(stock[i].spinBox->value()), &dialog);
 
         itemLayout->addWidget(checkBox);
@@ -102,8 +103,7 @@ void DepoPro::addNewOrder()
 
     if (dialog.exec() == QDialog::Accepted)
     {
-        QListWidgetItem* orderListItem = new QListWidgetItem();
-        orderItem* newOrderItem = new orderItem; // Creating a new orderItem object
+        auto newOrderItem = std::make_unique<orderItem>(); //Creating a new orderItem object
 
         for (size_t i = 0; i < checkBoxes.size(); ++i)
         {
@@ -116,15 +116,25 @@ void DepoPro::addNewOrder()
             }
         }
 
+        //Writing the information from the dialog box to the orderItem object
+        for (size_t i = 0; i < newOrderItem->items.size(); ++i)
+        {
+            if (newOrderItem->orderedItems)
+            {
+                newOrderItem->orderedItems->setText(newOrderItem->orderedItems->toPlainText() + newOrderItem->items[i]->text() + "\n");
+            }
+        }
+
         newOrderItem->clientInfo->setText("Client:\n" + clientInfoInput->toPlainText());
         newOrderItem->address->setText("Address:\n" + clientAddressInput->toPlainText());
-        this->orders.push_back(*newOrderItem); // Adding new element to the vector
+        this->orders.push_back(*newOrderItem); //Adding new element to the vector
 
+        auto orderListItem = std::make_unique<QListWidgetItem>();
         orderListItem->setSizeHint(newOrderItem->orderItemWidget->sizeHint());
 
-        // Setting the itemWidget as a listItem, so that can be put into a list
-        ui.orderList->addItem(orderListItem);
-        ui.orderList->setItemWidget(orderListItem, newOrderItem->orderItemWidget);
+        //Setting the itemWidget as a listItem, so that can be put into a list
+        ui.orderList->addItem(orderListItem.release());
+        ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), newOrderItem->orderItemWidget);
     }
 
 }
