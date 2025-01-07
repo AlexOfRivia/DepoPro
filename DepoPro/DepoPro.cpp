@@ -6,6 +6,12 @@
 #include <QListWidgetItem>
 #include <QSaveFile>
 #include <QMessageBox>
+#include <QDialog>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QSpinBox>
+
 
 
 //Adding a new item to list
@@ -45,7 +51,51 @@ void DepoPro::removeItem()
 
 void DepoPro::addNewOrder()
 {
-    //Opening the dialog box with stock vector elements
+    QDialog dialog(this);
+    dialog.setWindowTitle("Select Items for New Order");
+
+    QVBoxLayout* mainLayout = new QVBoxLayout(&dialog);
+
+    std::vector<QCheckBox*> checkBoxes;
+    std::vector<QSpinBox*> spinBoxes;
+    std::vector<QLabel*> labels;
+
+    for (size_t i = 0; i < stock.size(); ++i)
+    {
+        QHBoxLayout* itemLayout = new QHBoxLayout;
+
+        QCheckBox* checkBox = new QCheckBox(stock[i].itemName->toPlainText(), &dialog);
+        QSpinBox* spinBox = new QSpinBox(&dialog);
+        spinBox->setRange(1, stock[i].spinBox->value()); //Set the range based on available stock
+        QLabel* nameLabel = new QLabel(QString::number(stock[i].spinBox->value()), &dialog);
+
+        itemLayout->addWidget(checkBox);
+        itemLayout->addWidget(new QLabel("\tOrdered Amount:", &dialog));
+        itemLayout->addWidget(spinBox);
+        itemLayout->addWidget(new QLabel("\tMax Amount: ", &dialog));
+        itemLayout->addWidget(nameLabel);
+
+        mainLayout->addLayout(itemLayout);
+        checkBoxes.push_back(checkBox);
+        spinBoxes.push_back(spinBox);
+    }
+
+    QPushButton* okButton = new QPushButton("OK", &dialog);
+    connect(okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    mainLayout->addWidget(okButton);
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        for (size_t i = 0; i < checkBoxes.size(); ++i)
+        {
+            if (checkBoxes[i]->isChecked())
+            {
+                int amount = spinBoxes[i]->value();
+                //Process the selected items and amounts
+                //For example, add them to a new order
+            }
+        }
+    }
 }
 
 void DepoPro::removeOrder()

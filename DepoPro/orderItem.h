@@ -9,22 +9,24 @@
 #include <QCheckBox>
 #include <QListWidgetItem>
 #include <QLabel>
+#include <cstdlib>
 
 class orderItem
 {
-	//Public parameters
-	QWidget* orderItemWidget;
-	QTextEdit* itemName;
-	int orderID;
-	int date;
-	int clientInfo;
-	QString address;
-	QTextEdit* itemCategory;
-	QDoubleSpinBox* priceSpinBox;
-	QSpinBox* amountSpinBox;
+	public:
+		//Public parameters
+		QWidget* orderItemWidget;
+		QTextEdit* itemName;
+		int orderID;
+		int date;
+		int clientInfo;
+		QString address;
+		QTextEdit* itemCategory;
+		QDoubleSpinBox* priceSpinBox;
+		QSpinBox* amountSpinBox;
 
-	//Constructor & Destructor
-	orderItem();
-	~orderItem();
+		//Constructor & Destructor
+		orderItem();
+		~orderItem();
 };
 
