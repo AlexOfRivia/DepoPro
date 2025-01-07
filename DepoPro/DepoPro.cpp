@@ -122,7 +122,7 @@ void DepoPro::addNewOrder()
         {
             if (newOrderItem->orderedItems)
             {
-                newOrderItem->orderedItems->setText(newOrderItem->orderedItems->toPlainText() + newOrderItem->items[i]->text() + ": " + newOrderItem->orderedAmounts[i]->text() + "\n");
+                newOrderItem->orderedItems->setText(newOrderItem->orderedItems->toPlainText() + newOrderItem->items[i]->text() + ", Quantity: " + newOrderItem->orderedAmounts[i]->text() + "\n");
             }
         }
 
