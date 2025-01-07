@@ -287,6 +287,7 @@ DepoPro::DepoPro(QWidget *parent)
     //Hiding the frame and itemList upon startup
     ui.itemList->hide();
     ui.frame->hide();
+    ui.orderList->hide();
     ui.orderFrame->hide();
 }
 

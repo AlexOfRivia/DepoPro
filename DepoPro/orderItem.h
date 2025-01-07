@@ -22,7 +22,6 @@ class orderItem
 		QWidget* orderItemWidget;
 		QTextEdit* orderedItems;
 		int orderID;
-		int orderDate;
 		QLabel* clientInfo;
 		QLabel* address;
 		//QTextEdit* itemCategory;
