@@ -11,19 +11,24 @@
 #include <QLabel>
 #include <cstdlib>
 
+//Libraries for reading time and date
+#include <chrono>
+#include <iomanip>
+
 class orderItem
 {
 	public:
 		//Public parameters
 		QWidget* orderItemWidget;
-		QTextEdit* itemName;
+		QLabel* itemNames;
 		int orderID;
-		int date;
-		int clientInfo;
+		int orderDate;
+		QString clientInfo;
 		QString address;
-		QTextEdit* itemCategory;
-		QDoubleSpinBox* priceSpinBox;
-		QSpinBox* amountSpinBox;
+		//QTextEdit* itemCategory;
+
+		std::vector<QLabel*> items;
+		std::vector<QSpinBox*> orderedAmounts;
 
 		//Constructor & Destructor
 		orderItem();

@@ -49,8 +49,15 @@ void DepoPro::removeItem()
     }
 }
 
+//Adding a new order to the order list
 void DepoPro::addNewOrder()
 {
+    if (ui.itemList->count() == 0 && this->stock.empty())
+    {
+        QMessageBox::warning(this, "Error", "You currently have no items in stock.");
+        return;
+    }
+
     QDialog dialog(this);
     dialog.setWindowTitle("Select Items for New Order");
 
@@ -80,6 +87,15 @@ void DepoPro::addNewOrder()
         spinBoxes.push_back(spinBox);
     }
 
+	QLabel* clientInformation = new QLabel("Client Information: ", &dialog);
+	QLineEdit* clientInfoInput = new QLineEdit(&dialog);
+	QLabel* clientAddress = new QLabel("Client Address: ", &dialog);
+	QLineEdit* clientAddressInput = new QLineEdit(&dialog);
+	mainLayout->addWidget(clientInformation);
+	mainLayout->addWidget(clientInfoInput);
+    mainLayout->addWidget(clientAddress);
+    mainLayout->addWidget(clientAddressInput);
+
     QPushButton* okButton = new QPushButton("OK", &dialog);
     connect(okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
     mainLayout->addWidget(okButton);
@@ -98,9 +114,10 @@ void DepoPro::addNewOrder()
     }
 }
 
+//Removing the order from the list
 void DepoPro::removeOrder()
 {
-	//removing the order from the list
+
 }
 
 //Loading a stock list to current list from file
