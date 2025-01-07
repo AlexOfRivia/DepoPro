@@ -111,6 +111,7 @@ void DepoPro::addNewOrder()
             {
                 QLabel* itemLabel = new QLabel(stock[i].itemName->toPlainText(), &dialog);
                 QLabel* amountLabel = new QLabel(QString::number(spinBoxes[i]->value()), &dialog);
+				stock[i].spinBox->setValue(stock[i].spinBox->value() - spinBoxes[i]->value());      
                 newOrderItem->orderedAmounts.push_back(amountLabel);
                 newOrderItem->items.push_back(itemLabel);
             }
@@ -121,7 +122,7 @@ void DepoPro::addNewOrder()
         {
             if (newOrderItem->orderedItems)
             {
-                newOrderItem->orderedItems->setText(newOrderItem->orderedItems->toPlainText() + newOrderItem->items[i]->text() + "\n");
+                newOrderItem->orderedItems->setText(newOrderItem->orderedItems->toPlainText() + newOrderItem->items[i]->text() + ": " + newOrderItem->orderedAmounts[i]->text() + "\n");
             }
         }
 
@@ -142,7 +143,20 @@ void DepoPro::addNewOrder()
 //Removing the order from the list
 void DepoPro::removeOrder()
 {
+    int index = ui.orderList->currentRow(); //Get the index of the selected item
+    if (index != -1) //Check if an item is selected
+    {
+        //Remove the item from the list and the stock vector
+        QListWidgetItem* selectedItem = ui.orderList->takeItem(index); //Removing the selected item from the list
+        this->orders.erase(this->orders.begin() + index); //Erasing the vector item
 
+        //Delete the selected item object
+        delete selectedItem;
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "No item selected."); //Return an error message if no item is selected
+    }
 }
 
 //Loading a stock list to current list from file
