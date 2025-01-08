@@ -151,6 +151,7 @@ void DepoPro::removeOrder()
     {
         //Remove the item from the list and the stock vector
         QListWidgetItem* selectedItem = ui.orderList->takeItem(index); //Removing the selected item from the list
+		QListWidgetItem* selectedOrder = ui.listWidget->takeItem(index); //Removing the selected order ID from the list
         this->orders.erase(this->orders.begin() + index); //Erasing the vector item
 
         //Delete the selected item object
