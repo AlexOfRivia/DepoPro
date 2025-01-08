@@ -126,6 +126,9 @@ void DepoPro::addNewOrder()
             }
         }
 
+        //add order ID to the list widget
+		ui.listWidget->addItem("Order ID: " + QString::number(newOrderItem->orderID));
+
         newOrderItem->clientInfo->setText("Client:\n" + clientInfoInput->toPlainText());
         newOrderItem->address->setText("Address:\n" + clientAddressInput->toPlainText());
         this->orders.push_back(*newOrderItem); //Adding new element to the vector
