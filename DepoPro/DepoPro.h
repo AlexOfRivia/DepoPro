@@ -12,6 +12,9 @@ public:
     DepoPro(QWidget* parent = nullptr);
     ~DepoPro();
 
+    void saveStockAndOrders();
+	void loadStockAndOrders();
+
 
 private:
     Ui::DepoProClass ui;

@@ -14,6 +14,24 @@
 
 
 
+/*TODO
+- Add a function to save current stock and orders while closing the app
+- Add a function to load last saved stock and orders while opening the app
+*/
+
+//Saving the stock and orders to a file while closing the app
+void DepoPro::saveStockAndOrders()
+{
+
+}
+
+//Loading the last saved stock and orders while opening the app
+void DepoPro::loadStockAndOrders()
+{
+
+}
+
+
 //Adding a new item to list
 void DepoPro::addNewItem()
 {
@@ -300,3 +318,4 @@ DepoPro::~DepoPro()
 {
     
 }
+
