@@ -15,8 +15,8 @@
 
 
 /*TODO
-- Add a function to load last saved stock and orders while opening the app
-- Save the stock and roders in separate files (?)
+- Add loading last saved orders while opening the app
+- Save the stock and orders in separate files (?)
 - Add a DepoProData folder in Program Files
 */
 
