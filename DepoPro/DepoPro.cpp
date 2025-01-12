@@ -19,16 +19,47 @@
 - Add a function to load last saved stock and orders while opening the app
 */
 
-//Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
 {
+    //Saving the stock and orders to a file while closing the app
 
+	QString fileName = "DepoProSave.txt"; //Setting the file name
+
+	QFile file(fileName); //Opening the file
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) //Checking if the file is opened
+	{
+		QTextStream stream(&file); //Creating a stream
+		for (const auto& item : stock) //Writing the stock to the file
+		{
+			stream << item.itemName->toPlainText() << ";" //Writing the item name into stream
+				<< item.priceSpinBox->value() << ";" //Writing the item price into stream
+				<< item.spinBox->value() << "\n"; //Writing the item amount into stream
+		}
+
+		for (const auto& order : orders) //Writing the orders to the file
+		{
+			stream << "Order ID: " << order.orderID << "\n"; //Writing the order ID into stream
+			for (size_t i = 0; i < order.items.size(); ++i) //Writing the ordered items into stream
+			{
+				stream << order.items[i]->text() << ", Quantity: " << order.orderedAmounts[i]->text() << "\n";
+			}
+			stream << order.clientInfo << "\n"; //Writing the client information into stream
+			stream << order.address << "\n"; //Writing the client address into stream
+		}
+
+		file.close(); //Closing the file after writing
+	}
+	else
+	{
+		QMessageBox::warning(this, "Error", "Failed to save the file.");
+		return;
+	}
 }
 
-//Loading the last saved stock and orders while opening the app
 void DepoPro::loadStockAndOrders()
 {
-
+    //Loading the last saved stock and orders while opening the app
+    
 }
 
 
