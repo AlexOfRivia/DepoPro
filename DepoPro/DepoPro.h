@@ -16,6 +16,9 @@ public:
 	void loadStockAndOrders();
 
 
+protected:
+	void closeEvent(QCloseEvent* event) override;
+
 private:
     Ui::DepoProClass ui;
     std::vector<stockItem> stock;

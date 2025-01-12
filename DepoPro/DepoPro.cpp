@@ -15,13 +15,12 @@
 
 
 /*TODO
-- Add a function to save current stock and orders while closing the app
 - Add a function to load last saved stock and orders while opening the app
 */
 
+//Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
 {
-    //Saving the stock and orders to a file while closing the app
 
 	QString fileName = "DepoProSave.txt"; //Setting the file name
 
@@ -36,15 +35,12 @@ void DepoPro::saveStockAndOrders()
 				<< item.spinBox->value() << "\n"; //Writing the item amount into stream
 		}
 
-		for (const auto& order : orders) //Writing the orders to the file
+		for (const auto& order : orders) 
 		{
 			stream << "Order ID: " << order.orderID << "\n"; //Writing the order ID into stream
-			for (size_t i = 0; i < order.items.size(); ++i) //Writing the ordered items into stream
-			{
-				stream << order.items[i]->text() << ", Quantity: " << order.orderedAmounts[i]->text() << "\n";
-			}
-			stream << order.clientInfo << "\n"; //Writing the client information into stream
-			stream << order.address << "\n"; //Writing the client address into stream
+            stream << order.orderedItems->toPlainText();
+			stream << order.clientInfo->text() << "\n"; //Writing the client information into stream
+			stream << order.address->text() << "\n"; //Writing the client address into stream
 		}
 
 		file.close(); //Closing the file after writing
@@ -58,8 +54,66 @@ void DepoPro::saveStockAndOrders()
 
 void DepoPro::loadStockAndOrders()
 {
-    //Loading the last saved stock and orders while opening the app
-    
+    QFile file("DepoProSave.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this, "Error", "Failed to open the file.");
+        return;
+    }
+
+    QTextStream stream(&file);
+    stock.clear();
+    orders.clear();
+
+    while (!stream.atEnd())
+    {
+        QString line = stream.readLine();
+        if (line.startsWith("Order ID: "))
+        {
+            auto newOrderItem = std::make_unique<orderItem>();
+            newOrderItem->orderID = line.mid(9).toInt();
+
+            while (!stream.atEnd())
+            {
+                line = stream.readLine();
+                if (line.isEmpty())
+                    break;
+
+                QStringList parts = line.split(", Quantity: ");
+                if (parts.size() == 2)
+                {
+                    QLabel* itemLabel = new QLabel(parts[0]);
+                    QLabel* amountLabel = new QLabel(parts[1]);
+                    newOrderItem->items.push_back(itemLabel);
+                    newOrderItem->orderedAmounts.push_back(amountLabel);
+                }
+            }
+
+            orders.push_back(*newOrderItem);
+        }
+        else
+        {
+            QStringList parts = line.split(";");
+            if (parts.size() == 3)
+            {
+                stockItem item;
+                item.itemName = new QTextEdit(parts[0]);
+                item.priceSpinBox = new QDoubleSpinBox();
+                item.priceSpinBox->setValue(parts[1].toInt());
+                item.spinBox = new QSpinBox();
+                item.spinBox->setValue(parts[2].toInt());
+                stock.push_back(item);
+            }
+        }
+    }
+
+    file.close();
+}
+
+//Overriding the close event to save the stock and orders while closing the app
+void DepoPro::closeEvent(QCloseEvent* event)
+{
+    saveStockAndOrders();
 }
 
 
@@ -101,94 +155,94 @@ void DepoPro::removeItem()
 //Adding a new order to the order list
 void DepoPro::addNewOrder()
 {
-    if (ui.itemList->count() == 0 || this->stock.empty()) //Checking if empty
-    {
-        QMessageBox::warning(this, "Error", "You currently have no items in stock.");
-        return;
-    }
-
-    QDialog dialog(this);
-    dialog.setWindowTitle("Select Items for New Order");
-
-    QVBoxLayout* mainLayout = new QVBoxLayout(&dialog);
-
-    std::vector<QCheckBox*> checkBoxes;
-    std::vector<QSpinBox*> spinBoxes;
-    std::vector<QLabel*> labels;
-
-    //Writing the elements from the stock vector to the dialog box
-    for (size_t i = 0; i < stock.size(); ++i)
-    {
-        QHBoxLayout* itemLayout = new QHBoxLayout;
-
-        QCheckBox* checkBox = new QCheckBox(stock[i].itemName->toPlainText(), &dialog);
-        QSpinBox* spinBox = new QSpinBox(&dialog);
-        spinBox->setRange(1, stock[i].spinBox->value()); //Setting the range based on available stock
-        QLabel* nameLabel = new QLabel(QString::number(stock[i].spinBox->value()), &dialog);
-
-        itemLayout->addWidget(checkBox);
-        itemLayout->addWidget(new QLabel("\tOrdered Amount:", &dialog));
-        itemLayout->addWidget(spinBox);
-        itemLayout->addWidget(new QLabel("\tMax Amount: ", &dialog));
-        itemLayout->addWidget(nameLabel);
-
-        mainLayout->addLayout(itemLayout);
-        checkBoxes.push_back(checkBox);
-        spinBoxes.push_back(spinBox);
-    }
-
-    QLabel* clientInformation = new QLabel("Client Information: ", &dialog);
-    QTextEdit* clientInfoInput = new QTextEdit(&dialog);
-    QLabel* clientAddress = new QLabel("Client Address: ", &dialog);
-    QTextEdit* clientAddressInput = new QTextEdit(&dialog);
-    mainLayout->addWidget(clientInformation);
-    mainLayout->addWidget(clientInfoInput);
-    mainLayout->addWidget(clientAddress);
-    mainLayout->addWidget(clientAddressInput);
-
-    QPushButton* okButton = new QPushButton("OK", &dialog);
-    connect(okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    mainLayout->addWidget(okButton);
-
-    if (dialog.exec() == QDialog::Accepted)
-    {
-        auto newOrderItem = std::make_unique<orderItem>(); //Creating a new orderItem object
-
-        for (size_t i = 0; i < checkBoxes.size(); ++i)
+        if (ui.itemList->count() == 0 || this->stock.empty()) // Checking if empty
         {
-            if (checkBoxes[i]->isChecked())
-            {
-                QLabel* itemLabel = new QLabel(stock[i].itemName->toPlainText(), &dialog);
-                QLabel* amountLabel = new QLabel(QString::number(spinBoxes[i]->value()), &dialog);
-				stock[i].spinBox->setValue(stock[i].spinBox->value() - spinBoxes[i]->value());      
-                newOrderItem->orderedAmounts.push_back(amountLabel);
-                newOrderItem->items.push_back(itemLabel);
-            }
+            QMessageBox::warning(this, "Error", "You currently have no items in stock.");
+            return;
         }
 
-        //Writing the information from the dialog box to the orderItem object
-        for (size_t i = 0; i < newOrderItem->items.size(); ++i)
+        QDialog dialog(this);
+        dialog.setWindowTitle("Select Items for New Order");
+
+        QVBoxLayout* mainLayout = new QVBoxLayout(&dialog);
+
+        std::vector<QCheckBox*> checkBoxes;
+        std::vector<QSpinBox*> spinBoxes;
+        std::vector<QLabel*> labels;
+
+        // Writing the elements from the stock vector to the dialog box
+        for (size_t i = 0; i < stock.size(); ++i)
         {
-            if (newOrderItem->orderedItems)
-            {
-                newOrderItem->orderedItems->setText(newOrderItem->orderedItems->toPlainText() + newOrderItem->items[i]->text() + ", Quantity: " + newOrderItem->orderedAmounts[i]->text() + "\n");
-            }
+            QHBoxLayout* itemLayout = new QHBoxLayout;
+
+            QCheckBox* checkBox = new QCheckBox(stock[i].itemName->toPlainText(), &dialog);
+            QSpinBox* spinBox = new QSpinBox(&dialog);
+            spinBox->setRange(1, stock[i].spinBox->value()); // Setting the range based on available stock
+            QLabel* nameLabel = new QLabel(QString::number(stock[i].spinBox->value()), &dialog);
+
+            itemLayout->addWidget(checkBox);
+            itemLayout->addWidget(new QLabel("\tOrdered Amount:", &dialog));
+            itemLayout->addWidget(spinBox);
+            itemLayout->addWidget(new QLabel("\tMax Amount: ", &dialog));
+            itemLayout->addWidget(nameLabel);
+
+            mainLayout->addLayout(itemLayout);
+            checkBoxes.push_back(checkBox);
+            spinBoxes.push_back(spinBox);
         }
 
-        //add order ID to the list widget
-		ui.listWidget->addItem("Order ID: " + QString::number(newOrderItem->orderID));
+        QLabel* clientInformation = new QLabel("Client Information: ", &dialog);
+        QTextEdit* clientInfoInput = new QTextEdit(&dialog);
+        QLabel* clientAddress = new QLabel("Client Address: ", &dialog);
+        QTextEdit* clientAddressInput = new QTextEdit(&dialog);
+        mainLayout->addWidget(clientInformation);
+        mainLayout->addWidget(clientInfoInput);
+        mainLayout->addWidget(clientAddress);
+        mainLayout->addWidget(clientAddressInput);
 
-        newOrderItem->clientInfo->setText("Client:\n" + clientInfoInput->toPlainText());
-        newOrderItem->address->setText("Address:\n" + clientAddressInput->toPlainText());
-        this->orders.push_back(*newOrderItem); //Adding new element to the vector
+        QPushButton* okButton = new QPushButton("OK", &dialog);
+        connect(okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+        mainLayout->addWidget(okButton);
 
-        auto orderListItem = std::make_unique<QListWidgetItem>();
-        orderListItem->setSizeHint(newOrderItem->orderItemWidget->sizeHint());
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            auto newOrderItem = std::make_unique<orderItem>(); // Creating a new orderItem object
 
-        //Setting the itemWidget as a listItem, so that can be put into a list
-        ui.orderList->addItem(orderListItem.release());
-        ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), newOrderItem->orderItemWidget);
-    }
+            for (size_t i = 0; i < checkBoxes.size(); ++i)
+            {
+                if (checkBoxes[i]->isChecked())
+                {
+                    QLabel* itemLabel = new QLabel(stock[i].itemName->toPlainText(), &dialog);
+                    QLabel* amountLabel = new QLabel(QString::number(spinBoxes[i]->value()), &dialog);
+                    stock[i].spinBox->setValue(stock[i].spinBox->value() - spinBoxes[i]->value());
+                    newOrderItem->orderedAmounts.push_back(amountLabel);
+                    newOrderItem->items.push_back(itemLabel);
+                }
+            }
+
+            // Writing the information from the dialog box to the orderItem object
+            for (size_t i = 0; i < newOrderItem->items.size(); ++i)
+            {
+                if (newOrderItem->orderedItems)
+                {
+                    newOrderItem->orderedItems->setText(newOrderItem->orderedItems->toPlainText() + newOrderItem->items[i]->text() + ", Quantity: " + newOrderItem->orderedAmounts[i]->text() + "\n");
+                }
+            }
+
+            // Add order ID to the list widget
+            ui.listWidget->addItem("Order ID: " + QString::number(newOrderItem->orderID));
+
+            newOrderItem->clientInfo->setText("Client:\n" + clientInfoInput->toPlainText());
+            newOrderItem->address->setText("Address:\n" + clientAddressInput->toPlainText());
+            this->orders.push_back(*newOrderItem); // Adding new element to the vector
+
+            auto orderListItem = std::make_unique<QListWidgetItem>();
+            orderListItem->setSizeHint(newOrderItem->orderItemWidget->sizeHint());
+
+            // Setting the itemWidget as a listItem, so that can be put into a list
+            ui.orderList->addItem(orderListItem.release());
+            ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), newOrderItem->orderItemWidget);
+        }
 
 }
 
@@ -315,6 +369,8 @@ void DepoPro::saveToFile()
 DepoPro::DepoPro(QWidget *parent)
     : QMainWindow(parent)
 {
+
+    loadStockAndOrders(); //loading stock and orders
     ui.setupUi(this);
 
     QObject::connect(
