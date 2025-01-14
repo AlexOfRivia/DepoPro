@@ -1,2 +1,24 @@
-15530;Świeca zapłonowa Bosch 16mm, Quantity: 1             Pasek Klinowy Opel Astra G 1.6 16v, Quantity: 1; Client: abcd; Address: efgh
-123941; Cośtam innego, Quantity: 3; Client: klient1; Address: adres1
+OrderID:
+15296
+;
+OrderedItems:
+Klucz nasadowy 10mm, Quantity: 1
+;
+ClientInfo:
+Klient1
+Klient1@mail.com;
+;
+AddressInfo:
+Adres1
+OrderID:
+43215
+;
+OrderedItems:
+Klucz nasadowy 10mm, Quantity: 1
+;
+ClientInfo:
+Klient2
+Klient2@mail.com;
+;
+AddressInfo:
+Adres2

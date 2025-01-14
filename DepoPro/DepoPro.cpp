@@ -15,7 +15,7 @@
 
 
 /*TODO
-- Add loading last saved orders while opening the app
+- Fix order formating
 - Add a DepoProData folder in Program Files
 */
 
@@ -50,10 +50,10 @@ void DepoPro::saveStockAndOrders()
         QTextStream orderStream(&orderFile); //Creating a stream
         for (const auto& order : orders)
         {
-            orderStream << order.orderID << ";"; //Writing the order ID into stream
-            orderStream << order.orderedItems->toPlainText() <<";";
-            orderStream << order.clientInfo->text() << ";"; //Writing the client information into stream
-            orderStream << order.address->text() << "\n"; //Writing the client address into stream
+            orderStream << "OrderID:\n" << order.orderID << "\n;" << "\n"; //Writing the order ID into stream
+            orderStream << "OrderedItems:\n" << order.orderedItems->toPlainText() << "\n;" << "\n";
+            orderStream << "ClientInfo:\n" << order.clientInfo->text() << "\n;" << "\n"; //Writing the client information into stream
+            orderStream << "AddressInfo:\n" << order.address->text() << "\n"; //Writing the client address into stream
         }
 
         orderFile.close(); //Closing the file after writing
@@ -122,58 +122,15 @@ void DepoPro::loadStockAndOrders()
 
     file.close(); //Closes the file
 
-	fileName = "DepoProOrderSave.txt"; //Setting the file name
-	QFile orderFile(fileName); //Opening the file
-	if (!orderFile.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		// Handle file open error
-		QMessageBox::warning(this, "Error", "Failed to open the file.");
-		return;
-	}
-	QTextStream orderIn(&orderFile);
-    while (!orderIn.atEnd())
+    fileName = "DepoProOrderSave.txt"; // Setting the file name
+    QFile orderFile(fileName); // Opening the file
+    if (!orderFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QString orderline = orderIn.readLine(); //Creates a line of text from the txt file
-        QStringList orderlineList = orderline.split(";"); //Splits the currently read line after ;
-        if (orderlineList.size() < 3)
-        {
-            //Handle parsing error
-            QMessageBox::warning(this, "Error", "Invalid line format in the file.");
-            continue;
-        }
-
-        QString orderIDstr = orderlineList.value(0); //Setting the orderer ID to the first value in string list
-        QString orderedItemsstr = orderlineList.value(1); //Setting the ordered items to the second value in string list
-        QString clienfInformationstr = orderlineList.value(2); //Setting the client info to the third value in string list
-        QString clientAddressstr = orderlineList.value(3); //Setting the address info to the fourth value in string list
-
-        bool isIDOK;
-        int loadedOrderID = orderIDstr.toInt(&isIDOK); //Converting the read amount to int
-
-        if (!isIDOK)
-        {
-            //Handle conversion error
-            QMessageBox::warning(this, "Error", "Invalid order ID in the file.");
-            continue;
-        }
-
-        auto loadedListItem = std::make_unique<QListWidgetItem>(); //Creates a new widget item
-        auto loadedOrder = std::make_unique<orderItem>(); //Creates a new order item
-
-		loadedOrder->orderID = loadedOrderID; //Sets the order ID as the converted int value
-		loadedOrder->orderedItems->setText(orderedItemsstr); //Sets the ordered items as read ordered items
-        loadedOrder->clientInfo->setText(clienfInformationstr); //Sets the client information as the split client info
-		loadedOrder->address->setText(clientAddressstr); //Sets the client address as the split client address
-
-        this->orders.push_back(*loadedOrder); //Adding a new element to a vector
-
-        loadedListItem->setSizeHint(loadedOrder->orderItemWidget->sizeHint());
-
-        ui.orderList->addItem(loadedListItem.release()); //Adds the item to the list
-        ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), loadedOrder->orderItemWidget);
+        // Handle file open error
+        QMessageBox::warning(this, "Error", "Failed to open the file.");
+        return;
     }
-
-    file.close(); //Closes the file
+    
 }
 
 //Overriding the close event to save the stock and orders while closing the app
