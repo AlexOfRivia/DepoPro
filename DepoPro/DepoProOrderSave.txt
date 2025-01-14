@@ -1,24 +1,26 @@
 OrderID:
 15296
-;
 OrderedItems:
+Tarcze hamulcowe wentylowane 240mm, Quantity: 1
 Klucz nasadowy 10mm, Quantity: 1
-;
 ClientInfo:
+Client:
 Klient1
 Klient1@mail.com;
-;
 AddressInfo:
+Address:
+City1
 Adres1
 OrderID:
 43215
-;
 OrderedItems:
+Tarcze hamulcowe wentylowane 240mm, Quantity: 1
 Klucz nasadowy 10mm, Quantity: 1
-;
 ClientInfo:
+Client:
 Klient2
 Klient2@mail.com;
-;
 AddressInfo:
+Address:
+City2
 Adres2

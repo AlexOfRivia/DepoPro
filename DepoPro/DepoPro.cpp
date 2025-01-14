@@ -122,11 +122,11 @@ void DepoPro::loadStockAndOrders()
 
     file.close(); //Closes the file
 
-    fileName = "DepoProOrderSave.txt"; // Setting the file name
-    QFile orderFile(fileName); // Opening the file
+    fileName = "DepoProOrderSave.txt"; //Setting the file name
+    QFile orderFile(fileName); //Opening the file
     if (!orderFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        // Handle file open error
+        //Handle file open error
         QMessageBox::warning(this, "Error", "Failed to open the file.");
         return;
     }
