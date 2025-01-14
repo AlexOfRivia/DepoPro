@@ -27,6 +27,7 @@ class orderItem
 		QLabel* address;
 		//QTextEdit* itemCategory;
 
+		//item and amount vectors
 		std::vector<QLabel*> items;
 		std::vector<QLabel*> orderedAmounts;
 

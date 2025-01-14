@@ -35,11 +35,12 @@ orderItem::orderItem()
 	IDLabel = new QLabel("Order ID: " + QString::number(orderID));
 	IDLabel->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white;max-height:15px;max-width:180px;");
 
+	//Setting the client information layout 
 	clientInfoLayout->addWidget(IDLabel);
 	clientInfoLayout->addWidget(clientInfo);
 	clientInfoLayout->addWidget(address);
 
-
+	//Setting the main order layout
 	mainOrderLayout->layout()->addWidget(orderedItems);
 	mainOrderLayout->addLayout(clientInfoLayout);
 

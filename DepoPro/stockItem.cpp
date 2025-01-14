@@ -29,10 +29,12 @@ stockItem::stockItem()
     itemCategory->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 32.5px;max-width:65px;");
     itemCategory->setText("Enter product category");
 
+    //Price label
     QLabel* priceLabel = new QLabel();
     priceLabel->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 15px;max-width:90px;");
     priceLabel->setText("Price: (PLN)");
 
+    //Setting the vertical layout
     QVBoxLayout* itemLayout = new QVBoxLayout();
     itemLayout->addWidget(priceLabel);
     itemLayout->addWidget(priceSpinBox);
