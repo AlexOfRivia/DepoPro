@@ -53,7 +53,7 @@ void DepoPro::saveStockAndOrders()
             orderStream << order.orderID << ";"; //Writing the order ID into stream
             orderStream << order.orderedItems->toPlainText() <<";";
             orderStream << order.clientInfo->text() << ";"; //Writing the client information into stream
-            orderStream << order.address->text(); //Writing the client address into stream
+            orderStream << order.address->text() << "\n"; //Writing the client address into stream
         }
 
         orderFile.close(); //Closing the file after writing
