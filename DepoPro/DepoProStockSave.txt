@@ -1,6 +1,9 @@
-Tarcze hamulcowe wentylowane 240mm;180.99;7
+Tarcze hamulcowe wentylowane 240mm;180.99;12
+Żarówki mijania H7 Phillips;29.99;32
+Klucz nasadowy 10mm;10;5
+Klucz dynamometryczny 2-24Nm;120;30
 Olej silnikowy Valvoline 5w40 5L;90;10
-Świeca zapłonowa Bosch 16mm;40;80
-Akumulator Bosch 12V 350Ah 42;349;2
-Pasek Klinowy Opel Astra G 1.6 16v;103;9
+Świeca zapłonowa Bosch 16mm;40;90
+Akumulator Bosch 12V 350Ah 42;349;3
+Pasek Klinowy Opel Astra G 1.6 16v;97;12
 Filtr Oleju Filtron;21.98;9
