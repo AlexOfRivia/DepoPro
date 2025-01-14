@@ -50,9 +50,9 @@ void DepoPro::saveStockAndOrders()
         QTextStream orderStream(&orderFile); //Creating a stream
         for (const auto& order : orders)
         {
-            orderStream << "Order ID: " << order.orderID << "\n"; //Writing the order ID into stream
-            orderStream << "Ordered Items: \n" << order.orderedItems->toPlainText();
-            orderStream << order.clientInfo->text() << "\n"; //Writing the client information into stream
+            orderStream << "Order ID: " << order.orderID << ";" << "\n"; //Writing the order ID into stream
+            orderStream << "Ordered Items: \n" << order.orderedItems->toPlainText() <<";\n";
+            orderStream << order.clientInfo->text() << ";" << "\n"; //Writing the client information into stream
             orderStream << order.address->text() << "\n"; //Writing the client address into stream
         }
 
@@ -131,8 +131,7 @@ void DepoPro::loadStockAndOrders()
 		return;
 	}
 	QTextStream orderIn(&orderFile);
-
-
+    
 }
 
 //Overriding the close event to save the stock and orders while closing the app

@@ -1,6 +1,9 @@
-Order ID: 12199
+Order ID: 15530;
 Ordered Items: 
+Świeca zapłonowa Bosch 16mm, Quantity: 1
+Pasek Klinowy Opel Astra G 1.6 16v, Quantity: 1
+;
 Client:
-
+abcd;
 Address:
-
+efgh
