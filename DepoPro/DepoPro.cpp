@@ -16,7 +16,6 @@
 
 /*TODO
 - Add loading last saved orders while opening the app
-- Save the stock and orders in separate files (?)
 - Add a DepoProData folder in Program Files
 */
 
@@ -24,7 +23,7 @@
 void DepoPro::saveStockAndOrders()
 {
 
-	QString fileName = "DepoProSave.txt"; //Setting the file name
+	QString fileName = "DepoProStockSave.txt"; //Setting the file name
 
 	QFile file(fileName); //Opening the file
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) //Checking if the file is opened
@@ -36,15 +35,6 @@ void DepoPro::saveStockAndOrders()
 				<< item.priceSpinBox->value() << ";" //Writing the item price into stream
 				<< item.spinBox->value() << "\n"; //Writing the item amount into stream
 		}
-
-		for (const auto& order : orders) 
-		{
-			stream << "Order ID: " << order.orderID << "\n"; //Writing the order ID into stream
-            stream << "Ordered Items: \n" << order.orderedItems->toPlainText();
-			stream << "Client Info: \n" << order.clientInfo->text() << "\n"; //Writing the client information into stream
-			stream << "Address: \n" << order.address->text() << "\n"; //Writing the client address into stream
-		}
-
 		file.close(); //Closing the file after writing
 	}
 	else
@@ -52,18 +42,33 @@ void DepoPro::saveStockAndOrders()
 		QMessageBox::warning(this, "Error", "Failed to save the file.");
 		return;
 	}
+
+    fileName = "DepoProOrderSave.txt"; //Setting the file name
+    QFile orderFile(fileName); //Opening the file
+    if (orderFile.open(QIODevice::WriteOnly | QIODevice::Text)) //Checking if the file is opened
+    {
+        QTextStream orderStream(&orderFile); //Creating a stream
+        for (const auto& order : orders)
+        {
+            orderStream << "Order ID: " << order.orderID << "\n"; //Writing the order ID into stream
+            orderStream << "Ordered Items: \n" << order.orderedItems->toPlainText();
+            orderStream << order.clientInfo->text() << "\n"; //Writing the client information into stream
+            orderStream << order.address->text() << "\n"; //Writing the client address into stream
+        }
+
+        orderFile.close(); //Closing the file after writing
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "Failed to save the file.");
+        return;
+    }
 }
 
 //loadfing the stock and orders upon initializing the app
 void DepoPro::loadStockAndOrders()
 {
-    //QString fileName = QFileDialog::getOpenFileName(this, "Please, choose a file to open"); //Opens a file dialog box
-    QString fileName = "DepoProSave.txt"; //Setting the file name
-    if (fileName.isEmpty())
-    {
-        return; //if no file is selected, return early
-    }
-
+    QString fileName = "DepoProStockSave.txt"; //Setting the file name
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -116,6 +121,18 @@ void DepoPro::loadStockAndOrders()
     }
 
     file.close(); //Closes the file
+
+	fileName = "DepoProOrderSave.txt"; //Setting the file name
+	QFile orderFile(fileName); //Opening the file
+	if (!orderFile.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		// Handle file open error
+		QMessageBox::warning(this, "Error", "Failed to open the file.");
+		return;
+	}
+	QTextStream orderIn(&orderFile);
+
+
 }
 
 //Overriding the close event to save the stock and orders while closing the app
