@@ -40,9 +40,9 @@ void DepoPro::saveStockAndOrders()
 		for (const auto& order : orders) 
 		{
 			stream << "Order ID: " << order.orderID << "\n"; //Writing the order ID into stream
-            stream << order.orderedItems->toPlainText();
-			stream << order.clientInfo->text() << "\n"; //Writing the client information into stream
-			stream << order.address->text() << "\n"; //Writing the client address into stream
+            stream << "Ordered Items: \n" << order.orderedItems->toPlainText();
+			stream << "Client Info: \n" << order.clientInfo->text() << "\n"; //Writing the client information into stream
+			stream << "Address: \n" << order.address->text() << "\n"; //Writing the client address into stream
 		}
 
 		file.close(); //Closing the file after writing
