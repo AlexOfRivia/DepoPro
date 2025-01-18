@@ -428,7 +428,7 @@ DepoPro::DepoPro(QWidget *parent)
 {
 
     ui.setupUi(this);
-
+	setFixedSize(800, 500); //Setting the fixed size of the window
     loadStockAndOrders(); //loading stock and orders
     
     QObject::connect(
