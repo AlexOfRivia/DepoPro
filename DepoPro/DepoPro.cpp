@@ -19,6 +19,7 @@
 - Add a DepoProData folder in AppData
 */
 
+
 //Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
 {
@@ -426,7 +427,6 @@ DepoPro::DepoPro(QWidget *parent)
     : QMainWindow(parent)
 {
 
-   
     ui.setupUi(this);
 
     loadStockAndOrders(); //loading stock and orders
@@ -463,4 +463,3 @@ DepoPro::~DepoPro()
 {
     
 }
-
