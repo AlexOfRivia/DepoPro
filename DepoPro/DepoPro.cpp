@@ -16,7 +16,8 @@
 
 /*TODO
 - Fix order formating
-- Add a DepoProData folder in Program Files
+- Add a DepoProData folder in AppData
+- save ordered itemsa sepparately and order info sepparately
 */
 
 //Saving the stock and orders to a file while closing the app
@@ -50,10 +51,10 @@ void DepoPro::saveStockAndOrders()
         QTextStream orderStream(&orderFile); //Creating a stream
         for (const auto& order : orders)
         {
-            orderStream << "OrderID:\n" << order.orderID << "\n;" << "\n"; //Writing the order ID into stream
-            orderStream << "OrderedItems:\n" << order.orderedItems->toPlainText() << "\n;" << "\n";
-            orderStream << "ClientInfo:\n" << order.clientInfo->text() << "\n;" << "\n"; //Writing the client information into stream
-            orderStream << "AddressInfo:\n" << order.address->text() << "\n"; //Writing the client address into stream
+            orderStream << /*"OrderID:\n" <<*/ order.orderID << "\n;" << "\n"; //Writing the order ID into stream
+            orderStream << /*"OrderedItems:\n" << */order.orderedItems->toPlainText() << "\n;" << "\n";
+            orderStream << /*"ClientInfo:\n" <<*/ order.clientInfo->text() << "\n;" << "\n"; //Writing the client information into stream
+            orderStream << /*"AddressInfo:\n" <<*/ order.address->text() << "\n"; //Writing the client address into stream
         }
 
         orderFile.close(); //Closing the file after writing
@@ -130,6 +131,50 @@ void DepoPro::loadStockAndOrders()
         QMessageBox::warning(this, "Error", "Failed to open the file.");
         return;
     }
+	QTextStream orderIn(&orderFile);
+	while (!orderIn.atEnd())
+	{
+		QString line = orderIn.readAll(); //Creates a line of text from the txt file
+		QStringList lineList = line.split(";"); //Splits the currently read line after ;
+		//if (lineList.size() < 4)
+		//{
+		//	//Handle parsing error
+		//	QMessageBox::warning(this, "Error", "Invalid line format in the file.");
+		//	continue;
+		//}
+
+		QString orderIDStr = lineList.value(0); //Setting the order ID to the second value in string list
+		QString orderedItems = lineList.value(1); //Setting the ordered items to the fourth value in string list
+		QString clientInfo = lineList.value(2); //Setting the client information to the sixth value in string list
+		QString addressInfo = lineList.value(3); //Setting the client address to the eighth value in string list
+
+		bool orderIDOk;
+		int orderID = orderIDStr.toInt(&orderIDOk); //Converting the read order ID to int
+
+		if (!orderIDOk)
+		{
+			//Handle conversion error
+			QMessageBox::warning(this, "Error", "Invalid order ID in the file.");
+			continue;
+		}
+
+		auto loadedOrderItem = std::make_unique<orderItem>(); //Creating a new orderItem object
+
+		loadedOrderItem->orderID = orderID; //Setting the order ID as the converted int value
+		loadedOrderItem->orderedItems->setText(orderedItems); //Setting the ordered items as the read string
+		loadedOrderItem->clientInfo->setText(clientInfo); //Setting the client information as the read string
+		loadedOrderItem->address->setText(addressInfo); //Setting the client address as the read string
+
+		this->orders.push_back(*loadedOrderItem); //Adding a new element to a vector
+
+		auto loadedOrderListItem = std::make_unique<QListWidgetItem>(); //Creating a new widget item
+		loadedOrderListItem->setSizeHint(loadedOrderItem->orderItemWidget->sizeHint());
+
+		ui.orderList->addItem(loadedOrderListItem.release()); //Adds the item to the list
+		ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), loadedOrderItem->orderItemWidget);
+	}
+
+	orderFile.close(); //Closes the file
     
 }
 
