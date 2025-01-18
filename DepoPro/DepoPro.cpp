@@ -11,13 +11,12 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QSpinBox>
+#include <QSettings>
 
 
 
 /*TODO
-- Fix order formating
 - Add a DepoProData folder in AppData
-- save ordered itemsa sepparately and order info sepparately
 */
 
 //Saving the stock and orders to a file while closing the app
@@ -44,26 +43,25 @@ void DepoPro::saveStockAndOrders()
 		return;
 	}
 
-    fileName = "DepoProOrderSave.txt"; //Setting the file name
-    QFile orderFile(fileName); //Opening the file
-    if (orderFile.open(QIODevice::WriteOnly | QIODevice::Text)) //Checking if the file is opened
-    {
-        QTextStream orderStream(&orderFile); //Creating a stream
-        for (const auto& order : orders)
-        {
-            orderStream << /*"OrderID:\n" <<*/ order.orderID << "\n;" << "\n"; //Writing the order ID into stream
-            orderStream << /*"OrderedItems:\n" << */order.orderedItems->toPlainText() << "\n;" << "\n";
-            orderStream << /*"ClientInfo:\n" <<*/ order.clientInfo->text() << "\n;" << "\n"; //Writing the client information into stream
-            orderStream << /*"AddressInfo:\n" <<*/ order.address->text() << "\n"; //Writing the client address into stream
-        }
+	QSettings settings("AB", "DepoPro"); //Creating a settings object
 
-        orderFile.close(); //Closing the file after writing
-    }
-    else
+	settings.beginGroup("OrdersSave"); //Creating a group for orders
+    settings.remove(""); //Clear previous orders
+
+    for (int i = 0; i < orders.size(); ++i)
     {
-        QMessageBox::warning(this, "Error", "Failed to save the file.");
-        return;
+        const orderItem& order = orders[i];
+		QString orderGroup = QString("Order%1").arg(i); //Creating a group for each order
+
+        settings.beginGroup(orderGroup); //Beggining group
+		settings.setValue("OrderID", order.orderID); //Setting the order ID
+		settings.setValue("OrderedItems", order.orderedItems->toPlainText()); //Setting the ordered items
+		settings.setValue("ClientInfo", order.clientInfo->text()); //Setting the client infos
+		settings.setValue("Address", order.address->text()); //Setting the address
+		settings.endGroup(); //Ending the group
     }
+
+	settings.endGroup(); //Ending the group
 }
 
 //loadfing the stock and orders upon initializing the app
@@ -123,60 +121,49 @@ void DepoPro::loadStockAndOrders()
 
     file.close(); //Closes the file
 
-    fileName = "DepoProOrderSave.txt"; //Setting the file name
-    QFile orderFile(fileName); //Opening the file
-    if (!orderFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    QSettings settings("AB", "DepoPro"); //Oppening the settings object
+
+    settings.beginGroup("OrdersSave"); //Creating the Orders group
+	QStringList orderGroups = settings.childGroups(); //Getting the child groups
+
+    for (const QString& orderGroup : orderGroups)
     {
-        //Handle file open error
-        QMessageBox::warning(this, "Error", "Failed to open the file.");
-        return;
+		settings.beginGroup(orderGroup); //Beggining the group
+
+        bool isIDOK;
+        int orderID = settings.value("OrderID").toInt(&isIDOK);
+        if (!isIDOK)
+        {
+            //Handle orderID conversion error
+            QMessageBox::warning(this, "Error", "Invalid order ID in the settings.");
+			settings.endGroup(); //Ending the group
+            continue;
+        }
+
+        QString orderedItems = settings.value("OrderedItems").toString(); //Getting the ordered items
+        QString clientInfo = settings.value("ClientInfo").toString(); //Getting the client info
+        QString address = settings.value("Address").toString(); //Getting the order address
+
+        auto loadedOrder = std::make_unique<orderItem>(); //Creating a unique loadedOrder pointer
+        loadedOrder->orderID = orderID; //Setting the orderID
+        loadedOrder->orderedItems->setText(orderedItems); //Loading the ordered items
+        loadedOrder->clientInfo->setText(clientInfo); //Loading the client into
+        loadedOrder->address->setText(address); //Loading the address
+
+        orders.push_back(*loadedOrder); //Adding the created item to the orders vector
+
+		auto orderListItem = std::make_unique<QListWidgetItem>(); //Creating a new list item
+		orderListItem->setSizeHint(loadedOrder->orderItemWidget->sizeHint()); //Setting the size hint
+
+		ui.orderList->addItem(orderListItem.release()); //Adding the item to the list
+		ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), loadedOrder->orderItemWidget); //Setting the item widget
+
+		settings.endGroup(); //Ending the group
     }
-	QTextStream orderIn(&orderFile);
-	while (!orderIn.atEnd())
-	{
-		QString line = orderIn.readAll(); //Creates a line of text from the txt file
-		QStringList lineList = line.split(";"); //Splits the currently read line after ;
-		//if (lineList.size() < 4)
-		//{
-		//	//Handle parsing error
-		//	QMessageBox::warning(this, "Error", "Invalid line format in the file.");
-		//	continue;
-		//}
 
-		QString orderIDStr = lineList.value(0); //Setting the order ID to the second value in string list
-		QString orderedItems = lineList.value(1); //Setting the ordered items to the fourth value in string list
-		QString clientInfo = lineList.value(2); //Setting the client information to the sixth value in string list
-		QString addressInfo = lineList.value(3); //Setting the client address to the eighth value in string list
-
-		bool orderIDOk;
-		int orderID = orderIDStr.toInt(&orderIDOk); //Converting the read order ID to int
-
-		if (!orderIDOk)
-		{
-			//Handle conversion error
-			QMessageBox::warning(this, "Error", "Invalid order ID in the file.");
-			continue;
-		}
-
-		auto loadedOrderItem = std::make_unique<orderItem>(); //Creating a new orderItem object
-
-		loadedOrderItem->orderID = orderID; //Setting the order ID as the converted int value
-		loadedOrderItem->orderedItems->setText(orderedItems); //Setting the ordered items as the read string
-		loadedOrderItem->clientInfo->setText(clientInfo); //Setting the client information as the read string
-		loadedOrderItem->address->setText(addressInfo); //Setting the client address as the read string
-
-		this->orders.push_back(*loadedOrderItem); //Adding a new element to a vector
-
-		auto loadedOrderListItem = std::make_unique<QListWidgetItem>(); //Creating a new widget item
-		loadedOrderListItem->setSizeHint(loadedOrderItem->orderItemWidget->sizeHint());
-
-		ui.orderList->addItem(loadedOrderListItem.release()); //Adds the item to the list
-		ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), loadedOrderItem->orderItemWidget);
-	}
-
-	orderFile.close(); //Closes the file
-    
+	settings.endGroup(); //Ending the group
 }
+
 
 //Overriding the close event to save the stock and orders while closing the app
 void DepoPro::closeEvent(QCloseEvent* event)
