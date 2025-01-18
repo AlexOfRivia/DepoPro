@@ -1,12 +1,16 @@
 #include "orderItem.h"
 
-//Constructor
-orderItem::orderItem()
+void orderItem::setOrderID()
 {
 	//Generating random order ID
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
-	orderID = (std::rand() % 999999) + 1;
+	this->orderID = (std::rand() % 999999) + 1;
+	this->IDLabel->setText("Order ID: " + QString::number(orderID));
+}
 
+//Constructor
+orderItem::orderItem()
+{
     //Creating the order widget
     orderItemWidget = new QWidget;
     orderItemWidget->setStyleSheet("border:none; background-color:rgba(45,45,45,200);");

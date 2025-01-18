@@ -16,6 +16,7 @@
 
 
 /*TODO
+- Make some improvements on savind the order ID
 - Add a DepoProData folder in AppData
 */
 
@@ -55,7 +56,7 @@ void DepoPro::saveStockAndOrders()
 		QString orderGroup = QString("Order%1").arg(i); //Creating a group for each order
 
         settings.beginGroup(orderGroup); //Beggining group
-		settings.setValue("OrderID", order.orderID); //Setting the order ID
+		settings.setValue("OrderID", order.IDLabel->text()); //Setting the order ID
 		settings.setValue("OrderedItems", order.orderedItems->toPlainText()); //Setting the ordered items
 		settings.setValue("ClientInfo", order.clientInfo->text()); //Setting the client infos
 		settings.setValue("Address", order.address->text()); //Setting the address
@@ -211,7 +212,7 @@ void DepoPro::removeItem()
 //Adding a new order to the order list
 void DepoPro::addNewOrder()
 {
-        if (ui.itemList->count() == 0 || this->stock.empty()) // Checking if empty
+        if (ui.itemList->count() == 0 || this->stock.empty()) //Checking if empty
         {
             QMessageBox::warning(this, "Error", "You currently have no items in stock.");
             return;
@@ -226,14 +227,14 @@ void DepoPro::addNewOrder()
         std::vector<QSpinBox*> spinBoxes;
         std::vector<QLabel*> labels;
 
-        // Writing the elements from the stock vector to the dialog box
+        //Writing the elements from the stock vector to the dialog box
         for (size_t i = 0; i < stock.size(); ++i)
         {
             QHBoxLayout* itemLayout = new QHBoxLayout;
 
             QCheckBox* checkBox = new QCheckBox(stock[i].itemName->toPlainText(), &dialog);
             QSpinBox* spinBox = new QSpinBox(&dialog);
-            spinBox->setRange(1, stock[i].spinBox->value()); // Setting the range based on available stock
+            spinBox->setRange(1, stock[i].spinBox->value()); //Setting the range based on available stock
             QLabel* nameLabel = new QLabel(QString::number(stock[i].spinBox->value()), &dialog);
 
             itemLayout->addWidget(checkBox);
@@ -262,8 +263,8 @@ void DepoPro::addNewOrder()
 
         if (dialog.exec() == QDialog::Accepted)
         {
-            auto newOrderItem = std::make_unique<orderItem>(); // Creating a new orderItem object
-
+            auto newOrderItem = std::make_unique<orderItem>(); //Creating a new orderItem object
+			newOrderItem->setOrderID(); //Setting the order ID
             for (size_t i = 0; i < checkBoxes.size(); ++i)
             {
                 if (checkBoxes[i]->isChecked())
@@ -276,7 +277,7 @@ void DepoPro::addNewOrder()
                 }
             }
 
-            // Writing the information from the dialog box to the orderItem object
+            //Writing the information from the dialog box to the orderItem object
             for (size_t i = 0; i < newOrderItem->items.size(); ++i)
             {
                 if (newOrderItem->orderedItems)
@@ -285,17 +286,17 @@ void DepoPro::addNewOrder()
                 }
             }
 
-            // Add order ID to the list widget
+            //Add order ID to the list widget
             ui.listWidget->addItem("Order ID: " + QString::number(newOrderItem->orderID));
 
             newOrderItem->clientInfo->setText("Client:\n" + clientInfoInput->toPlainText());
             newOrderItem->address->setText("Address:\n" + clientAddressInput->toPlainText());
-            this->orders.push_back(*newOrderItem); // Adding new element to the vector
+            this->orders.push_back(*newOrderItem); //Adding new element to the vector
 
             auto orderListItem = std::make_unique<QListWidgetItem>();
             orderListItem->setSizeHint(newOrderItem->orderItemWidget->sizeHint());
 
-            // Setting the itemWidget as a listItem, so that can be put into a list
+            //Setting the itemWidget as a listItem, so that can be put into a list
             ui.orderList->addItem(orderListItem.release());
             ui.orderList->setItemWidget(ui.orderList->item(ui.orderList->count() - 1), newOrderItem->orderItemWidget);
         }

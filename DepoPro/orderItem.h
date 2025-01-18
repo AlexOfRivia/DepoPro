@@ -31,6 +31,8 @@ class orderItem
 		std::vector<QLabel*> items;
 		std::vector<QLabel*> orderedAmounts;
 
+		void setOrderID();
+
 		//Constructor & Destructor
 		orderItem();
 		~orderItem();
