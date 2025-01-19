@@ -13,14 +13,6 @@
 #include <QSpinBox>
 #include <QSettings>
 
-
-
-/*TODO
-- Make some improvements on savind the order ID
-- Add a DepoProData folder in AppData
-*/
-
-
 //Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
 {
@@ -56,7 +48,7 @@ void DepoPro::saveStockAndOrders()
 		QString orderGroup = QString("Order%1").arg(i); //Creating a group for each order
 
         settings.beginGroup(orderGroup); //Beggining group
-		settings.setValue("OrderID", order.IDLabel->text()); //Setting the order ID
+		settings.setValue("OrderID", order.IDString); //Setting the order ID
 		settings.setValue("OrderedItems", order.orderedItems->toPlainText()); //Setting the ordered items
 		settings.setValue("ClientInfo", order.clientInfo->text()); //Setting the client infos
 		settings.setValue("Address", order.address->text()); //Setting the address
@@ -147,7 +139,8 @@ void DepoPro::loadStockAndOrders()
         QString address = settings.value("Address").toString(); //Getting the order address
 
         auto loadedOrder = std::make_unique<orderItem>(); //Creating a unique loadedOrder pointer
-        loadedOrder->orderID = orderID; //Setting the orderID
+		loadedOrder->IDString = QString::number(orderID); //Setting the order ID
+		loadedOrder->IDLabel->setText("Order ID: " + loadedOrder->IDString); //Setting the order ID label
         loadedOrder->orderedItems->setText(orderedItems); //Loading the ordered items
         loadedOrder->clientInfo->setText(clientInfo); //Loading the client into
         loadedOrder->address->setText(address); //Loading the address

@@ -5,7 +5,8 @@ void orderItem::setOrderID()
 	//Generating random order ID
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	this->orderID = (std::rand() % 999999) + 1;
-	this->IDLabel->setText("Order ID: " + QString::number(orderID));
+	this->IDString = QString::number(this->orderID);
+	this->IDLabel->setText("Order ID: " + this->IDString);
 }
 
 //Constructor
@@ -36,7 +37,7 @@ orderItem::orderItem()
 	address->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 7pt 'Arial';  color: white;max-height:150px; max-width:180px;");
 
 	//Order ID Label
-	IDLabel = new QLabel("Order ID: " + QString::number(orderID));
+	IDLabel = new QLabel("OrderID: " + this->IDString);
 	IDLabel->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white;max-height:15px;max-width:180px;");
 
 	//Setting the client information layout 

@@ -25,7 +25,7 @@ class orderItem
 		QLabel* IDLabel;
 		QLabel* clientInfo;
 		QLabel* address;
-		//QTextEdit* itemCategory;
+		QString IDString;
 
 		//item and amount vectors
 		std::vector<QLabel*> items;
