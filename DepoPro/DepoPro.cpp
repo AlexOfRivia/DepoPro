@@ -13,6 +13,10 @@
 #include <QSpinBox>
 #include <QSettings>
 
+/*TODO
+- Add loading and savingstock to QSettings(?)
+*/
+
 //Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
 {
@@ -144,6 +148,9 @@ void DepoPro::loadStockAndOrders()
         loadedOrder->orderedItems->setText(orderedItems); //Loading the ordered items
         loadedOrder->clientInfo->setText(clientInfo); //Loading the client into
         loadedOrder->address->setText(address); //Loading the address
+
+        //Add order ID to the list widget
+        ui.listWidget->addItem("Order ID: " + loadedOrder->IDString);
 
         orders.push_back(*loadedOrder); //Adding the created item to the orders vector
 
