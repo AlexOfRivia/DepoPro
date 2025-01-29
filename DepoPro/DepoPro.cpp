@@ -13,9 +13,6 @@
 #include <QSpinBox>
 #include <QSettings>
 
-/*TODO
-- Add loading and savingstock to QSettings(?)
-*/
 
 //Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
