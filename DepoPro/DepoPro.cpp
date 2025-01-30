@@ -14,6 +14,10 @@
 #include <QSettings>
 
 
+/*TODO 
+- Add a stock widget on the dashboard to preview current item names and quantities
+*/
+
 //Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
 {
