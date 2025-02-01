@@ -14,10 +14,6 @@
 #include <QSettings>
 
 
-/*TODO 
-- Add a stock widget on the dashboard to preview current item names and quantities
-*/
-
 //Saving the stock and orders to a file while closing the app
 void DepoPro::saveStockAndOrders()
 {
@@ -42,25 +38,29 @@ void DepoPro::saveStockAndOrders()
 		return;
 	}
 
-	QSettings settings("AB", "DepoPro"); //Creating a settings object
+    QSettings settings("AB", "DepoPro"); // Creating a settings object
 
-	settings.beginGroup("OrdersSave"); //Creating a group for orders
-    settings.remove(""); //Clear previous orders
+    settings.beginGroup("OrdersSave"); // Creating a group for orders
+    settings.remove(""); // Clear previous orders
 
     for (int i = 0; i < orders.size(); ++i)
     {
         const orderItem& order = orders[i];
-		QString orderGroup = QString("Order%1").arg(i); //Creating a group for each order
+        QString orderGroup = QString("Order%1").arg(i); // Creating a group for each order
 
-        settings.beginGroup(orderGroup); //Beggining group
-		settings.setValue("OrderID", order.IDString); //Setting the order ID
-		settings.setValue("OrderedItems", order.orderedItems->toPlainText()); //Setting the ordered items
-		settings.setValue("ClientInfo", order.clientInfo->text()); //Setting the client infos
-		settings.setValue("Address", order.address->text()); //Setting the address
-		settings.endGroup(); //Ending the group
+        settings.beginGroup(orderGroup); // Beginning group
+        settings.setValue("OrderID", order.IDString); // Setting the order ID
+        settings.setValue("OrderedItems", order.orderedItems->toPlainText()); // Setting the ordered items
+        settings.setValue("ClientInfo", order.clientInfo->text()); // Setting the client info
+        settings.setValue("Address", order.address->text()); // Setting the address
+        settings.endGroup(); // Ending the group
     }
+    settings.endGroup(); // Ending the OrdersSave group
 
-	settings.endGroup(); //Ending the group
+    settings.beginGroup("NotepadSave"); // Saving the notes from the notepad
+    settings.remove(""); // Clearing previous notes
+    settings.setValue("NotepadText", ui.textEdit->toPlainText()); // Saving the notes
+    settings.endGroup(); // Ending the NotepadSave group
 }
 
 //loadfing the stock and orders upon initializing the app
@@ -111,6 +111,9 @@ void DepoPro::loadStockAndOrders()
         loadedItem->spinBox->setValue(stockItemAmount); //Sets the stock item amount as the converted int value
 
         this->stock.push_back(*loadedItem); //Adding a new element to a vector
+
+        ui.listWidget_2->addItem(loadedItem->itemName->toPlainText()); //Adding a new item to the stock widget on the dashboard
+
 
         loadedListItem->setSizeHint(loadedItem->stockItemWidget->sizeHint());
 
@@ -163,7 +166,12 @@ void DepoPro::loadStockAndOrders()
 
 		settings.endGroup(); //Ending the group
     }
+	settings.endGroup(); //Ending the OrdersSave group
+	settings.beginGroup("NotepadSave"); //Loading the notes from the notepad
+	
+    QString notepadText = settings.value("NotepadText").toString(); //Getting the notes
 
+	ui.textEdit->setText(notepadText); //Setting the notes to the notepad
 	settings.endGroup(); //Ending the group
 }
 
@@ -184,7 +192,9 @@ void DepoPro::addNewItem()
 
         this->stock.push_back(*newStockItem); //Adding new element to the vector
 
-        listItem->setSizeHint(newStockItem->stockItemWidget->sizeHint());
+        listItem->setSizeHint(newStockItem->stockItemWidget->sizeHint()); 
+
+        ui.listWidget_2->addItem(newStockItem->itemName->toPlainText()); //Adding a new item to the stock widget on the dashboard
 
         //Setting the itemWidget as a listItem, so that can be put into a list
         ui.itemList->addItem(listItem);
@@ -199,6 +209,7 @@ void DepoPro::removeItem()
     {
         //Remove the item from the list and the stock vector
         QListWidgetItem* selectedItem = ui.itemList->takeItem(index); //Removing the selected item from the list
+        QListWidgetItem* selectedStockItem = ui.listWidget_2->takeItem(index); //Removing the selected item from the stock widget
         this->stock.erase(this->stock.begin() + index); //Erasing the vector item
 
         //Delete the selected item object
@@ -378,6 +389,8 @@ void DepoPro::loadFromFile()
         loadedItem->spinBox->setValue(stockItemAmount); //Sets the stock item amount as the converted int value
 
         this->stock.push_back(*loadedItem); //Adding a new element to a vector
+
+        ui.listWidget_2->addItem(loadedItem->itemName->toPlainText()); //Adding a new item to the stock widget on the dashboard
 
         loadedListItem->setSizeHint(loadedItem->stockItemWidget->sizeHint());
 

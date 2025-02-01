@@ -715,6 +715,67 @@ QPushButton#removeOrderButton:Pressed
      </property>
     </widget>
    </widget>
+   <widget class="QFrame" name="stockWidget">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>50</y>
+      <width>281</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame
+{
+	background-color: rgb(61,61,61);
+	border-style: inset;
+	border-radius: 15px;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>251</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+	font: 700 12pt &quot;Britannic&quot;;
+	color: rgba(200,200,200,225);
+}</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Current Stock&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>31</y>
+       <width>271</width>
+       <height>401</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QListWidget
+{
+	border:none;
+	background-color: rgba(121,121,121,128);
+}</string>
+     </property>
+    </widget>
+   </widget>
    <zorder>orderList</zorder>
    <zorder>orderWidget</zorder>
    <zorder>Sidebar_2</zorder>
@@ -722,6 +783,7 @@ QPushButton#removeOrderButton:Pressed
    <zorder>itemList</zorder>
    <zorder>NotepadFrame</zorder>
    <zorder>orderFrame</zorder>
+   <zorder>stockWidget</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -1110,6 +1172,54 @@ QPushButton#removeOrderButton:Pressed
     <hint type="destinationlabel">
      <x>199</x>
      <y>349</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dashboardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>stockWidget</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>472</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stockButton</sender>
+   <signal>clicked()</signal>
+   <receiver>stockWidget</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>98</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>473</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>orderButton</sender>
+   <signal>clicked()</signal>
+   <receiver>stockWidget</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>473</x>
+     <y>112</y>
     </hint>
    </hints>
   </connection>

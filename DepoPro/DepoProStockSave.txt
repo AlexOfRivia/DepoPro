@@ -4,6 +4,5 @@ Klucz nasadowy 10mm;10;0
 Klucz dynamometryczny 2-24Nm;120;24
 Olej silnikowy Valvoline 5w40 5L;90;4
 Świeca zapłonowa Bosch 16mm;40;103
-Akumulator Bosch 12V 350Ah 42;349;46
-Pasek Klinowy Opel Astra G 1.6 16v;97;5
-Filtr Oleju Filtron;21.98;7
+Pasek Klinowy Opel Astra G 1.6 16v;97;4
+Filtr Oleju Filtron;21.98;6
