@@ -21,6 +21,7 @@ stockItem::stockItem()
 
     //Item price
     priceSpinBox = new QDoubleSpinBox();    
+	priceSpinBox->setSingleStep(0.01); //Setting the step to 0.01
     priceSpinBox->setStyleSheet("border:none; background-color:rgba(45,45,45,255);font: 700 8pt 'Arial';  color: white; max-height: 32.5px; max-width:95px;");
     priceSpinBox->setMaximum(999999);
 
