@@ -1,5 +1,4 @@
-Tarcze hamulcowe wentylowane 240mm;180.9;67
-Żarówki mijania H7 Phillips;29.99;19
+Tarcze hamulcowe wentylowane 240mm;180.9;61
 Klucz nasadowy 10mm;10;0
 Klucz dynamometryczny 2-24Nm;120;24
 Olej silnikowy Valvoline 5w40 5L;90;4
