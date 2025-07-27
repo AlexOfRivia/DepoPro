@@ -283,13 +283,13 @@ QPushButton:Pressed
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>0</y>
+      <y>-20</y>
       <width>641</width>
-      <height>511</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QListWidget" name="orderList">
@@ -298,7 +298,7 @@ QPushButton:Pressed
         <x>0</x>
         <y>60</y>
         <width>641</width>
-        <height>451</height>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -607,7 +607,7 @@ QPushButton#removeOrderButton:Pressed
         <x>0</x>
         <y>60</y>
         <width>641</width>
-        <height>451</height>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">

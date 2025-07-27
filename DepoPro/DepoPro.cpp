@@ -442,8 +442,9 @@ DepoPro::DepoPro(QWidget *parent)
     : QMainWindow(parent)
 {
 
+
     ui.setupUi(this);
-	setFixedSize(800, 500); //Setting the fixed size of the window
+	//setFixedSize(800, 500); //Setting the fixed size of the window
     loadStockAndOrders(); //loading stock and orders
     
     QObject::connect(
@@ -466,11 +467,21 @@ DepoPro::DepoPro(QWidget *parent)
     );
 
 
-    //Hiding the frame and itemList upon startup
-    ui.itemList->hide();
-    ui.frame->hide();
-    ui.orderList->hide();
-    ui.orderFrame->hide();
+    ui.stackedWidget->setCurrentIndex(1); //Setting the default page to the dashboard
+    
+    QObject::connect(
+        ui.orderButton, &QPushButton::clicked, [this]() { ui.stackedWidget->setCurrentIndex(0); } //Showing the order page upon button click
+    );
+
+    QObject::connect(
+        ui.dashboardButton, &QPushButton::clicked, [this]() { ui.stackedWidget->setCurrentIndex(1); } //Showing the main dashboard uppon button click
+    );
+
+    QObject::connect(
+        ui.stockButton, &QPushButton::clicked, [this]() { ui.stackedWidget->setCurrentIndex(2); } //Showing the stock pge upon button click
+    );
+
+
 }
 
 //Destructor
