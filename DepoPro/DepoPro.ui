@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>901</width>
-    <height>519</height>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -340,7 +340,7 @@ QPushButton:Pressed
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -519,189 +519,163 @@ QPushButton#addOrderButton:Pressed
        </layout>
       </widget>
       <widget class="QWidget" name="page_3">
-       <widget class="QFrame" name="NotepadFrame">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>50</y>
-          <width>281</width>
-          <height>231</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QFrame
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QFrame" name="orderWidget">
+            <property name="styleSheet">
+             <string notr="true">QFrame
 {
 	background-color: rgb(61,61,61);
 	border-style: inset;
 	border-radius: 15px;
 }</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Shape::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Shadow::Raised</enum>
-        </property>
-        <widget class="QTextEdit" name="textEdit">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>40</y>
-           <width>261</width>
-           <height>181</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QTextEdit
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="styleSheet">
+                <string notr="true">QLabel
+{
+	font: 700 12pt &quot;Britannic&quot;;
+	color: rgba(200,200,200,225);
+}</string>
+               </property>
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Current Orders&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="listWidget">
+               <property name="styleSheet">
+                <string notr="true">QListWidget
+{
+	border:none;
+	background-color: rgba(121,121,121,128);
+}</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="NotepadFrame">
+            <property name="styleSheet">
+             <string notr="true">QFrame
+{
+	background-color: rgb(61,61,61);
+	border-style: inset;
+	border-radius: 15px;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="styleSheet">
+                <string notr="true">QLabel
+{
+	font: 700 12pt &quot;Britannic&quot;;
+	color: rgba(200,200,200,225);
+}</string>
+               </property>
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Notepad&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="textEdit">
+               <property name="styleSheet">
+                <string notr="true">QTextEdit
 {
 	background-color: white;
 	border-radius:5px
 }</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>261</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
-{
-	font: 700 12pt &quot;Britannic&quot;;
-	color: rgba(200,200,200,225);
-}</string>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Notepad&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QFrame" name="orderWidget">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>310</y>
-          <width>281</width>
-          <height>181</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QFrame
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_10">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Policy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>5</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QFrame" name="stockWidget">
+          <property name="styleSheet">
+           <string notr="true">QFrame
 {
 	background-color: rgb(61,61,61);
 	border-style: inset;
 	border-radius: 15px;
 }</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Shape::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Shadow::Raised</enum>
-        </property>
-        <widget class="QLabel" name="label_4">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>251</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="styleSheet">
+              <string notr="true">QLabel
 {
 	font: 700 12pt &quot;Britannic&quot;;
 	color: rgba(200,200,200,225);
 }</string>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Current Orders&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-        <widget class="QListWidget" name="listWidget">
-         <property name="geometry">
-          <rect>
-           <x>5</x>
-           <y>31</y>
-           <width>271</width>
-           <height>141</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QListWidget
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Current Stock&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="listWidget_2">
+             <property name="styleSheet">
+              <string notr="true">QListWidget
 {
 	border:none;
 	background-color: rgba(121,121,121,128);
 }</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QFrame" name="stockWidget">
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>50</y>
-          <width>281</width>
-          <height>441</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QFrame
-{
-	background-color: rgb(61,61,61);
-	border-style: inset;
-	border-radius: 15px;
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Shape::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Shadow::Raised</enum>
-        </property>
-        <widget class="QLabel" name="label_5">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>0</y>
-           <width>251</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel
-{
-	font: 700 12pt &quot;Britannic&quot;;
-	color: rgba(200,200,200,225);
-}</string>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Current Stock&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-        <widget class="QListWidget" name="listWidget_2">
-         <property name="geometry">
-          <rect>
-           <x>5</x>
-           <y>31</y>
-           <width>271</width>
-           <height>401</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-	border:none;
-	background-color: rgba(121,121,121,128);
-}</string>
-         </property>
-        </widget>
-       </widget>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="page_2">
        <layout class="QVBoxLayout" name="verticalLayout_3">
